@@ -42,6 +42,7 @@ angular.module('objective-fire', ['firebase'])
           if (self == null) {
             self = {};
           }
+          //TODO: only do this stuff if they are supposed to be loaded
           for (param in self.pointers) { // check every pointer and update the object with the pointers
             if (typeof self.pointers[param] == "object") { // if its an object it is a list
 
