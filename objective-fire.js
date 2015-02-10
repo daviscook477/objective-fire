@@ -1,19 +1,26 @@
 angular.module('objective-fire', ['firebase'])
 
-.factory('ObjectFire', [function($q, $injector, $FirebaseObject, $firebase) {
+.factory('ObjectFire', function($q, $injector, $FirebaseObject, $firebase) {
   function ObjectFire(rootRef) {
     this.rootRef = rootRef;
     this.objectConstructors = {};
+    this.objectConstructorsNew = {};
   }
 
   ObjectFire.prototype = {
     constructorOf: function(name) {
-      return objectConstructors[name];
+      console.log("obtaining the constructor for " + name);
+      return this.objectConstructors[name];
+    },
+    constructorOfNew: function(name) {
+      console.log("obtaining the constructor for a new " + name);
+      return this.objectConstructorsNew[name];
     },
     registerObjectType: function(schema) {
       var properties = schema.getProperties();
       var pointersData = schema.getPointersData();
       var pointersList = schema.getPointersList();
+      console.log("generating angularfire factory for the object to be registered");
       var factory = $FirebaseObject.$extendFactory({
         load: function(name) {
           var deffered = $q.defer();
@@ -41,30 +48,47 @@ angular.module('objective-fire', ['firebase'])
           return true;
         }
       });
+      var rootRef = this.rootRef;
+      console.log("registering constructor of " + schema.name);
       this.objectConstructors[schema.name] = function(id) {
-        var ref = this.rootRef.child(schema.loc).child(id);
+        var ref = rootRef.child(schema.loc).child(id);
         var sync = $firebase(ref, { objectFactory: factory });
         return sync.$asObject();
       };
+      console.log("registering constructor for new " + schema.name);
+      this.objectConstructorsNew[schema.name] = function() {
+        var ref = rootRef.child(schema.loc).push(); // create a new location for the object we are making
+        var sync = $firebase(ref, { objectFactory: factory });
+        var obj = sync.$asObject();
+        if (schema.objectConstructor != null) {
+          schema.objectConstructor.apply(obj, arguments); // call the "mock" constructor
+        }
+        obj.$save(); // save the new constructed object
+        return sync.$asObject();
+      }
     }
   };
 
-  return new ObjectFire();
+  return ObjectFire;
 
-}])
+})
 
-.factory('Schema', [function() {
+.factory('Schema', function() {
 
   console.log("schema factory being created");
 
   function Schema(name, loc) {
     this.name = name;
     this.loc = loc;
+    this.objectConstructor = null;
     this._properties = {};
     console.log("creating schema for '" + name + "' with location in firebase of " + loc);
   }
 
   Schema.prototype = {
+    setConstructor: function(objectConstructor) {
+      this.objectConstructor = objectConstructor;
+    },
     addProperty: function(name, data) {
       console.log("creating property '" + name + "' with data of '" + JSON.stringify(data));
       this._properties[name] = data;
@@ -108,9 +132,9 @@ angular.module('objective-fire', ['firebase'])
   };
 
   return Schema;
-}])
+})
 
-.factory('SchemaUtil', [function() {
+.factory('SchemaUtil', function() {
   return {
     createData: function(type) {
       var data = {};
@@ -131,4 +155,4 @@ angular.module('objective-fire', ['firebase'])
       return data;
     }
   };
-}]);
+});
