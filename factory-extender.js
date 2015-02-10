@@ -50,9 +50,12 @@ angular.module('objective-fire')
           }
           return deffered.promise; // return the promise
         },
+
+        // now we override the angularfire implementatation of methods in order to make it work with pointers
         $$updated: function(snapshot) {
           var newData = snapshot.val();
           var changed = false;
+          //this method is going to get complicated if I want it to work right...
 
           // check for changes in the pointers and update the pointers and respective objects on this
           // set 'chhanged' to true if something changes
