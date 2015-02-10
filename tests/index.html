@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Objective Fire Tests</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/firebase/firebase-debug.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
+
+
+    <script src="objective-fire.js"></script>
+    <script src="schema.js"></script>
+    <script src="factory-extender.js"></script>
+    <script src="fire-object.js"></script>
+    <script src="tests/test01.js"></script>
+  </head>
+  <body ng-app="test01" ng-controller="ctrl">
+    <h1 style="text-align:center">Test output may be found in the console</h1>
+  </body>
+</html>
+
+<!doctype html>
+<html>
+  <head>
+      <meta charset='UTF-8' />
+      <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+
+      <title>Unit Tests</title>
+
+      <link rel='stylesheet' href='../node_modules/qunit/node_modules/qunitjs/qunit/qunit.css'>
+
+      <!-- get qunit -->
+      <script src='../node_modules/qunit/node_modules/qunitjs/qunit/qunit.js'></script>
+      <script src='../bower_components/angularfire/dist/angularfire.js'></script>
+      <script src='../bower_components/angular/angular.js'></script>
+      <script src='../bower_components/firebase/firebase-debug.js'></script>
+
+      <script src='../src/objective-fire.js'></script>
+      <script src='../src/factory-extender.js'></script>
+      <script src='../src/fire-object.js'></script>
+      <script src='../src/schema.js'></script>
+
+      <script src='test01.js'></script>
+
+  </head>
+  <body>
+    <div id="qunit"></div> <!-- QUnit fills this with results, etc -->
+    <div id='qunit-fixture'>
+
+      <!-- any HTML you want to be present in each test (will be reset for each test) -->
+
+    </div>
+  </body>
+</html>
