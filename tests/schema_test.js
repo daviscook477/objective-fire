@@ -1,11 +1,12 @@
 module("Schema Tests");
 
 // obtain angular stuff for testing
-var injector = angular.injector(['objective-fire']);
+var injector = angular.injector(['ng', 'objective-fire']);
 var Schema = injector.get('Schema');
 
 
-test("schema conforms to expected api", function(assert) {
+QUnit.test("schema conforms to expected api", function(assert) {
+  console.log("how is this undefined but the tests work:", JSON.stringify(assert.ok));
   var mySchema = new Schema("test", "tests");
   assert.ok(mySchema, 'can create new schema');
   assert.ok(mySchema.getName() == "test", 'schema name is correct');

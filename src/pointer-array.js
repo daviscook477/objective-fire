@@ -16,7 +16,7 @@ angular.module('objective-fire')
   };
 
   return function(pointerRef, fireObject) {
-    var sync = $firebase(pointerRef, { arrayFactory: getFactory(classOfObj, ObjectFire) });
+    var sync = $firebase(pointerRef, { arrayFactory: getFactory(fireObject) });
     var obj = sync.$asArray();
 
     return obj;
