@@ -1,5 +1,3 @@
-console.log("starting test 01");
-
 angular.module('test01', ['objective-fire'])
 
 // this is a really bad type of test
