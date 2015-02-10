@@ -18,9 +18,9 @@ angular.module('objective-fire', ['firebase'])
     },
     registerObjectType: function(schema) {
       var selfObjF = this;
-      var properties = schema.getProperties();
-      var pointersData = schema.getPointersData();
-      var pointersList = schema.getPointersList();
+      var properties = schema.getDataProperties();
+      var pointersData = schema.getPointerDataProperties();
+      var pointersList = schema.getPointerListProperties();
       console.log("generating angularfire factory for the object to be registered");
       var factory = $FirebaseObject.$extendFactory({
         load: function(name) {
@@ -90,88 +90,4 @@ angular.module('objective-fire', ['firebase'])
 
   return ObjectFire;
 
-})
-
-.factory('Schema', function() {
-
-  console.log("schema factory being created");
-
-  function Schema(name, loc) {
-    this.name = name;
-    this.loc = loc;
-    this.objectConstructor = null;
-    this._properties = {};
-    console.log("creating schema for '" + name + "' with location in firebase of " + loc);
-  }
-
-  Schema.prototype = {
-    setConstructor: function(objectConstructor) {
-      this.objectConstructor = objectConstructor;
-    },
-    addProperty: function(name, data) {
-      console.log("creating property '" + name + "' with data of '" + JSON.stringify(data));
-      this._properties[name] = data;
-    },
-    removeProperty: function(name) {
-      this._properties[name] = null;
-    },
-    getProperties: function() {
-      var properties = {};
-      for (name in this._properties) {
-        var isNormalProperty = true;
-        if (this._properties[name].type === "pointerData") {
-          isNormalProperty = false;
-        } else if (this._properties[name].type === "pointerList") {
-          isNormalProperty = false;
-        }
-        if (isNormalProperty) {
-          properties[name] = this._properties[name];
-        }
-      }
-      return properties;
-    },
-    getPointersData: function() {
-      var properties = {};
-      for (name in this._properties) {
-        if (this._properties[name].type === "pointerData") {
-          properties[name] = this._properties[name];
-        }
-      }
-      return properties;
-    },
-    getPointersList: function() {
-      var properties = {};
-      for (name in this._properties) {
-        if (this._properties[name].type === "pointerList") {
-          properties[name] = this._properties[name];
-        }
-      }
-      return properties;
-    }
-  };
-
-  return Schema;
-})
-
-.factory('SchemaUtil', function() {
-  return {
-    createData: function(type) {
-      var data = {};
-      data.type = type;
-      console.log("creating data with type '" + type + "'");
-      return data;
-    },
-    createDataPointer: function(objectType, isList) {
-      var data = {};
-      data.object = objectType;
-      if (isList) {
-        console.log("creating data pointer that points to a list of objects of type '" + data.object + "'");
-        data.type = "pointerList";
-      } else {
-        data.type = "pointerData";
-        console.log("creating data pointer that points to an object of type '" + data.object + "'");
-      }
-      return data;
-    }
-  };
 });
