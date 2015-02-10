@@ -1,0 +1,21 @@
+{
+  "name": "objective-fire",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-qunit": ">=0.2.1",
+    "grunt-contrib-watch": ">=0.3.1"
+  },
+  "description": "This library allows for the data in a firebase to be represented with objects",
+  "main": "GruntFile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daviscook477/objective-fire.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daviscook477/objective-fire/issues"
+  },
+  "homepage": "https://github.com/daviscook477/objective-fire"
+}
