@@ -5,8 +5,12 @@ angular.module('test01', ['objective-fire'])
 .controller('ctrl', function($scope, Schema, ObjectFire) {
   console.log("doing test01");
   var ref = new Firebase("https://idea0.firebaseio.com");
+
+  // create user schema
   var user = new Schema("user", "users");
   user.addDataProperty("screenName", "string");
+
+  // create idea schema
   var idea = new Schema("idea", "ideas");
   idea.addDataProperty("title", "string");
   idea.addDataProperty("description", "string");
@@ -20,21 +24,15 @@ angular.module('test01', ['objective-fire'])
       this.pointers.owner = auth.uid;
     }
   });
-  console.log("property list of idea: " + JSON.stringify(idea.getDataProperties()));
-  console.log("pointer list of idea: " + JSON.stringify(idea.getPointerDataProperties()));
-  console.log(ObjectFire);
+  // create the objectfire and register the two schemas
   var objFire = new ObjectFire(ref);
-  objFire.registerObjectType(idea);
-  objFire.registerObjectType(user);
-  var User = objFire.constructorOf("user");
-  var Idea = objFire.constructorOf("idea");
-  var IdeaNew = objFire.constructorOfNew("idea");
-  var testUser = new User("simplelogin:12");
-  testUser.$loaded().then(function(self) {
-    console.log("user ");
-    console.log(self);
-  })
-  var testIdea = new Idea("-JhlLResumfnaJbf94gk");
+  objFire.registerObjectClass(idea);
+  objFire.registerObjectClass(user);
+
+  // now create an instance of idea
+  var Idea = objFire.getObjectClass("idea");
+  var IdeaConst = Idea.getExistConstructor();
+  var testIdea = new IdeaConst("-JhlLResumfnaJbf94gk");
   testIdea.$loaded().then(function(self) {
     console.log("idea ");
     console.log(self);

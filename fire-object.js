@@ -23,6 +23,7 @@ angular.module('objective-fire')
     // set the constructor that creates an already existing object of this class in the firebase
     this.existConstructor = function(id) {
       // obtain the angularfire object
+      console.log(schema.loc + "/" + id);
       var ref = self.rootRef.child(schema.loc).child(id); // rootRef here refers to the rootRef of the FireObject
       var sync = $firebase(ref, { objectFactory: self.factory });
       var obj = sync.$asObject();
