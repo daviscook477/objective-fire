@@ -1,6 +1,6 @@
 angular.module('objective-fire', ['firebase'])
 
-.factory('ObjectFire', ['$q', '$injector', '$FirebaseObject', '$firebase', function($q, $injector, $FirebaseObject, $firebase) {}
+.factory('ObjectFire', [function($q, $injector, $FirebaseObject, $firebase) {
   function ObjectFire(rootRef) {
     this.rootRef = rootRef;
     this.objectConstructors = {};
@@ -9,7 +9,7 @@ angular.module('objective-fire', ['firebase'])
   ObjectFire.prototype = {
     constructorOf: function(name) {
       return objectConstructors[name];
-    }
+    },
     registerObjectType: function(schema) {
       var properties = schema.getProperties();
       var pointersData = schema.getPointersData();
@@ -51,33 +51,22 @@ angular.module('objective-fire', ['firebase'])
 
   return new ObjectFire();
 
-})
+}])
 
 .factory('Schema', [function() {
+
+  console.log("schema factory being created");
 
   function Schema(name, loc) {
     this.name = name;
     this.loc = loc;
     this._properties = {};
+    console.log("creating schema for '" + name + "' with location in firebase of " + loc);
   }
 
   Schema.prototype = {
-    createData: function(type) {
-      var data = {};
-      data.type = type;
-      return data;
-    },
-    createDataPointer: function(objectType, isList) {
-      var data = {};
-      data.object = type;
-      if (isList) {
-        data.type = "pointerList";
-      } else {
-        data.type = "pointerData";
-      }
-      return data;
-    },
     addProperty: function(name, data) {
+      console.log("creating property '" + name + "' with data of '" + JSON.stringify(data));
       this._properties[name] = data;
     },
     removeProperty: function(name) {
@@ -96,7 +85,7 @@ angular.module('objective-fire', ['firebase'])
           properties[name] = this._properties[name];
         }
       }
-      return propeties;
+      return properties;
     },
     getPointersData: function() {
       var properties = {};
@@ -105,7 +94,7 @@ angular.module('objective-fire', ['firebase'])
           properties[name] = this._properties[name];
         }
       }
-      return propeties;
+      return properties;
     },
     getPointersList: function() {
       var properties = {};
@@ -114,10 +103,32 @@ angular.module('objective-fire', ['firebase'])
           properties[name] = this._properties[name];
         }
       }
-      return propeties;
+      return properties;
     }
   };
 
   return Schema;
+}])
 
+.factory('SchemaUtil', [function() {
+  return {
+    createData: function(type) {
+      var data = {};
+      data.type = type;
+      console.log("creating data with type '" + type + "'");
+      return data;
+    },
+    createDataPointer: function(objectType, isList) {
+      var data = {};
+      data.object = objectType;
+      if (isList) {
+        console.log("creating data pointer that points to a list of objects of type '" + data.object + "'");
+        data.type = "pointerList";
+      } else {
+        data.type = "pointerData";
+        console.log("creating data pointer that points to an object of type '" + data.object + "'");
+      }
+      return data;
+    }
+  };
 }]);
