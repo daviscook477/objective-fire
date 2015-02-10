@@ -42,6 +42,15 @@ angular.module('objective-fire')
       this.objectConstructor = objectConstructor;
       return this;
     },
+    getName: function() {
+      return this.name;
+    },
+    getLocation: function() {
+      return this.loc;
+    },
+    getConstructor: function() {
+      return this.objectConstructor;
+    },
     addDataProperty: function(name, dataType) {
       console.log("creating property: " + name + " of type: " + dataType);
       this.properties.normal[name] = dataType;
