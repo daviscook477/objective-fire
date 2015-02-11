@@ -14,60 +14,42 @@ angular.module('objective-fire')
     this.schema = schema;
     this.rootRef = rootRef;
     this.objFireRef = ObjectFire; // here we obtain the object fire - we need this is order to reference other classes of objects later
-
     // create the angularfire factory
     this.factory = FactoryExtender.createFactory(this.schema, this.rootRef, this.objFireRef); // this process is handed off to a separate module
-
-    var self = this; // preserve this for some things
-
-    // set the constructor that creates an already existing object of this class in the firebase
-    this.existConstructor = function(id) {
-      // obtain the angularfire object
-      console.log(schema.loc + "/" + id);
-      var ref = self.rootRef.child(schema.loc).child(id); // rootRef here refers to the rootRef of the FireObject
-      var sync = $firebase(ref, { objectFactory: self.factory });
-      var obj = sync.$asObject();
-
-      // do constructor stuff
-      obj._doLoad = {}; // this is private property that determines if a specific pointer should be loaded
-      obj.pointers = {}; // set its pointers to an empty object
-
-      // return the constructed object
-      return obj;
-    };
-
-    // set the constructor that creates a new object of this class in the firebase
-    this.newConstructor = function() {
-      // obtain the angularfire object
-      var ref = self.rootRef.child(schema.loc).push(); // create a new location for the object we are making
-      var sync = $firebase(ref, { objectFactory: self.factory });
-      var obj = sync.$asObject();
-
-      // do constructor stuff
-      obj._doLoad = {}; // this is private property that determines if a specific pointer should be loaded
-      obj.pointers = {};
-      if (self.schema.objectConstructor != null) {
-        // call the constructor for new objects
-        self.schema.objectConstructor.apply(obj, arguments);
-      }
-      obj.$save(); // save the new constructed object
-
-      //return the constructed object
-      return obj;
-    };
-
   }
 
   // edit the prototype
-  FireObject.prototype = {
-    // gets the constructor for an existing object in the firebase
-    getExistConstructor: function() {
-      return this.existConstructor;
-    },
-    // gets the constructor for a new object
-    getNewConstructor: function() {
-      return this.newConstructor;
+  FireObject.prototype.new = function() {
+    // obtain the angularfire object
+    var ref = this.rootRef.child(this.schema.loc).push(); // create a new location for the object we are making
+    var sync = $firebase(ref, { objectFactory: this.factory });
+    var obj = sync.$asObject();
+
+    // do constructor stuff
+    obj._doLoad = {}; // this is private property that determines if a specific pointer should be loaded
+    obj.pointers = {};
+    if (this.schema.objectConstructor != null) {
+      // call the constructor for new objects
+      this.schema.objectConstructor.apply(obj, arguments);
     }
+    obj.$save(); // save the new constructed object
+
+    //return the constructed object
+    return obj;
+  };
+  FireObject.prototype.instance = function(id) {
+    console.log("creating obj of type: " + this.schema.name + " with id of " + id);
+    // obtain the angularfire object
+    var ref = this.rootRef.child(this.schema.loc).child(id); // rootRef here refers to the rootRef of the FireObject
+    var sync = $firebase(ref, { objectFactory: this.factory });
+    var obj = sync.$asObject();
+
+    // do constructor stuff
+    obj._doLoad = {}; // this is private property that determines if a specific pointer should be loaded
+    obj.pointers = {}; // set its pointers to an empty object
+
+    // return the constructed object
+    return obj;
   };
 
   // return the constructor

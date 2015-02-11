@@ -33,8 +33,7 @@ angular.module('objective-fire')
             // this section of code loads the object if it is a pointer to data
             this.$loaded().then(function(self) {
               var classOfObj = pointersData[name].object; // figure out which class of object we need to create
-              var constructorWeNeed = ObjectFire.getObjectClass(classOfObj).getExistConstructor(); // get the constructor
-              self[name] = new constructorWeNeed(this.pointers[name]);
+              self[name] = ObjectFire.getObjectClass(classOfObj).instance(self.pointers[name]);
               deffered.resolve(self[name]);
             });
           } else if (name in pointerList) {
@@ -54,12 +53,22 @@ angular.module('objective-fire')
         // now we override the angularfire implementatation of methods in order to make it work with pointers
         $$updated: function(snapshot) {
           var newData = snapshot.val();
+          console.log("data obtained to update is: " + JSON.stringify(newData));
           var changed = false;
           //this method is going to get complicated if I want it to work right...
 
           // check for changes in the pointers and update the pointers and respective objects on this
           // set 'chhanged' to true if something changes
-
+          for (param in pointersData) {
+            console.log("this is a pointer: " + param);
+            if (this._doLoad[param]) { // if we should load this property
+              console.log("we are going to load it");
+              //temp
+              var classOfObj = pointersData[param].object;
+              console.log("this is the class we found for it: " + JSON.stringify(classOfObj));
+              newData[param] = ObjectFire.getObjectClass(classOfObj).instance(newData.pointers[param]);
+            }
+          }
 
           // check for changes in normal data in the snapshot and update that here
           // change the 'changed' variable to true if anything changed

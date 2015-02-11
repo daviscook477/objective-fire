@@ -4,7 +4,7 @@ var injector = angular.injector(['ng', 'objective-fire']);
 var pa = injector.get('PointerArray');
 var s = injector.get('Schema');
 var ObjectFire = injector.get('ObjectFire');
-test("pointer array works", function(assert) {
+asyncTest("pointer array works", function(assert) {
   //assert.expect(0);
   var ref = new Firebase("https://idea0.firebaseio.com");
   var catSchema = new s('category', 'ideas');
@@ -22,6 +22,7 @@ test("pointer array works", function(assert) {
       console.log(self2.title);
     });
     assert.ok(true);
+    start();
   })
 
 

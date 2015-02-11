@@ -5,12 +5,10 @@ angular.module('objective-fire')
   var getFactory = function(fireObject) {
     return $FirebaseArray.$extendFactory({
       $$added: function(snapshot) {
-        var constructor = fireObject.getExistConstructor();
-        return new constructor(snapshot.key());
+        return fireObject.instance(snapshot.key());
       },
       $$updated: function(snapshot) {
-        var constructor = fireObject.getExistConstructor();
-        this.$getRecord(snapshot.key()) = new constructor(snapshot.key());
+        this.$getRecord(snapshot.key()) = fireObject.instance(snapshot.key());
       }
     });
   };
