@@ -1,3 +1,9 @@
 # objective-fire
-This library allows for the data in a firebase to be represented with objects
-TODO: write readme
+Objective Fire is a library used to represent data in a firebase in an object oriented manner.
+
+Dependencies:
+  - AngularJS
+  - Firebase
+  - Angularfire
+
+TODO: write important documentaion here
