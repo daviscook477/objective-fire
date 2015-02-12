@@ -66,7 +66,7 @@ angular.module('objective-fire')
     },
     addPointerListProperty: function(name, objectClass) {
       console.log("creating pointer list property: " + name + " of class: " + objectClass);
-      this.properties.pointers.data[name] = {
+      this.properties.pointers.list[name] = {
         type: "pointerList",
         object: objectClass
       };
@@ -75,7 +75,7 @@ angular.module('objective-fire')
     // removes all a property (regardless of if it is normal data or if it is a pointer)
     // returns true on success, false on failure
     removeProperty: function(name) {
-      try {
+      try { //TODO: this method totally doesn't work
         for (param in this.properties) {
           this.properties[param][name] = null;
         }

@@ -20,6 +20,6 @@ asyncTest("single data pointer evaluates correctly", function(assert) {
     self.$loaded().then(function(self2) {
       assert.ok(self2.first == "Admin" && self2.last=="Test");
       start();
-    })
+    });
   });
 });

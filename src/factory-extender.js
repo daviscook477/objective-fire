@@ -1,6 +1,6 @@
 angular.module('objective-fire')
 
-.factory('FactoryExtender', function($FirebaseObject, $firebase, $q) {
+.factory('FactoryExtender', function($FirebaseObject, $firebase, $q, PointerArray) {
 
   /*
    * The code in this class is what manipulates the angularfire objects to recognize pointers
@@ -20,6 +20,10 @@ angular.module('objective-fire')
 
       // extend the factory and return the factory
       return $FirebaseObject.$extendFactory({
+
+        //TODO: load should do something such that it doesn't load the object and then $$update loads the object
+
+
         // this method instructs the object to load its pointer at name (there is no reason to use this with a normal property)
         load: function(name) {
           this._doLoad[name] = true; // we should load this (this property is checked in $$updated)
@@ -36,8 +40,15 @@ angular.module('objective-fire')
               self[name] = ObjectFire.getObjectClass(classOfObj).instance(self.pointers[name]);
               deffered.resolve(self[name]);
             });
-          } else if (name in pointerList) {
-
+          } else if (name in pointersList) {
+            console.log("loading the " + name);
+            this.$loaded().then(function(self) {
+              var classOfList = pointersList[name].object; // figure out which class to make the array
+              var theClass = ObjectFire.getObjectClass(classOfList);
+              var ref = rootRef.child(schema.getLocation()).child(self.$id).child("pointers").child(name);//.child(uh to somewhere this must lead)
+              self[name] = new PointerArray(ref, theClass);
+              deffered.resolve(self[name]);
+            });
             // this section of code loads the object if it is a pointer list
             //TODO: implement loading and checking lists
           } else { // not a pointer
@@ -67,6 +78,19 @@ angular.module('objective-fire')
               var classOfObj = pointersData[param].object;
               console.log("this is the class we found for it: " + JSON.stringify(classOfObj));
               newData[param] = ObjectFire.getObjectClass(classOfObj).instance(newData.pointers[param]);
+            }
+          }
+
+          for (param in pointersList) {
+            console.log("this is a pointer list: " + param)
+            if (this._doLoad[param]) {
+              console.log("we are going to load it");
+              var classOfList = pointersList[param].object;
+              console.log("this is the class we found for it: " + JSON.stringify(classOfList));
+              var theClass = ObjectFire.getObjectClass(classOfList);
+              var ref = rootRef.child(schema.getLocation()).child(this.$id).child("pointers").child(param);//.child(uh to somewhere this must lead)
+              console.log("the location " + param + " is being set to a pointer array");
+              newData[param] = new PointerArray(ref, theClass);
             }
           }
 
