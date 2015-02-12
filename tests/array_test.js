@@ -5,25 +5,32 @@ var pa = injector.get('PointerArray');
 var s = injector.get('Schema');
 var ObjectFire = injector.get('ObjectFire');
 asyncTest("pointer array works", function(assert) {
-  //assert.expect(0);
-  var ref = new Firebase("https://idea0.firebaseio.com");
-  var catSchema = new s('category', 'ideas');
-  catSchema.addDataProperty("title", "string");
+  var ref = new Firebase("https://objective-fire.firebaseio.com");
+  var pointerArrayRef = ref.child('groups').child('group:1').child('participants');
+  var userSchema = new s('user', 'users');
+  userSchema.addDataProperty('first', 'string').addDataProperty('last', 'string');
   var objFire = new ObjectFire(ref);
-  objFire.registerObjectClass(catSchema);
-
-  var Category = objFire.getObjectClass('category');
-  var pointRef = ref.child('categories').child('-Jhfut9iySJl4rHq_9fX').child('ideas');
-  var mypa = new pa(pointRef, Category);
+  objFire.registerObjectClass(userSchema);
+  var mypa = new pa(pointerArrayRef, objFire.getObjectClass('user'));
+  var numDone = 0;
+  var maybeStart = function() {
+    if (numDone == 2) {
+      start();
+    }
+  };
   mypa.$loaded().then(function(self) {
-    console.log("hello!")
-    console.log("hello world ");
-    mypa[0].$loaded(function( self2) {
-      console.log(self2.title);
+    mypa[0].$loaded().then(function(self2) {
+      for (param in mypa[0]) {
+        console.log(param, mypa[0][param]);
+      }
+      assert.ok(self2.first=="John"&&self2.last=="Test", "first object of array loaded correctly");
+      numDone++;
+      maybeStart();
     });
-    assert.ok(true);
-    start();
-  })
-
-
+    mypa[1].$loaded().then(function(self2) {
+      assert.ok(self2.first=="Bob"&&self2.last=="Test", "second object of array loaded correctly");
+      numDone++;
+      maybeStart();
+    });
+  });
 });

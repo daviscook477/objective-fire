@@ -1,10 +1,10 @@
-module("Array Tests");
+module("Data Pointer Tests");
 
 var injector = angular.injector(['ng', 'objective-fire']);
 var pa = injector.get('PointerArray');
 var s = injector.get('Schema');
 var ObjectFire = injector.get('ObjectFire');
-asyncTest("pointer array works", function(assert) {
+asyncTest("single data pointer evaluates correctly", function(assert) {
   //assert.expect(0);
   var ref = new Firebase("https://idea0.firebaseio.com");
   var ideaSchema = new s('idea', 'ideas');
