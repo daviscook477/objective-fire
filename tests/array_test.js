@@ -6,7 +6,7 @@ var s = injector.get('Schema');
 var ObjectFire = injector.get('ObjectFire');
 asyncTest("pointer array works", function(assert) {
   var ref = new Firebase("https://objective-fire.firebaseio.com");
-  var pointerArrayRef = ref.child('groups').child('group:1').child('participants');
+  var pointerArrayRef = ref.child('groups').child('group:1').child('pointers').child('participants');
   var userSchema = new s('user', 'users');
   userSchema.addDataProperty('first', 'string').addDataProperty('last', 'string');
   var objFire = new ObjectFire(ref);
@@ -20,9 +20,6 @@ asyncTest("pointer array works", function(assert) {
   };
   mypa.$loaded().then(function(self) {
     mypa[0].$loaded().then(function(self2) {
-      for (param in mypa[0]) {
-        console.log(param, mypa[0][param]);
-      }
       assert.ok(self2.first=="John"&&self2.last=="Test", "first object of array loaded correctly");
       numDone++;
       maybeStart();

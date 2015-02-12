@@ -6,24 +6,20 @@ var s = injector.get('Schema');
 var ObjectFire = injector.get('ObjectFire');
 asyncTest("single data pointer evaluates correctly", function(assert) {
   //assert.expect(0);
-  var ref = new Firebase("https://idea0.firebaseio.com");
-  var ideaSchema = new s('idea', 'ideas');
-  ideaSchema.addPointerDataProperty("owner", "user");
+  var ref = new Firebase("https://objective-fire.firebaseio.com");
+  var groupSchema = new s('group', 'groups');
+  groupSchema.addPointerDataProperty("admin", 'user');
   var objFire = new ObjectFire(ref);
-  objFire.registerObjectClass(ideaSchema);
+  objFire.registerObjectClass(groupSchema);
   var userSchema = new s('user', 'users');
-  userSchema.addDataProperty('screenName', 'string');
+  userSchema.addDataProperty('first', 'string').addDataProperty('last', 'string');
   objFire.registerObjectClass(userSchema);
-
-  var idea = objFire.getObjectClass('idea');
-  var myIdea = idea.instance('-JhfuxKt7IYKzKN3rHRQ');
-  myIdea.load('owner').then(function(self) {
+  var group = objFire.getObjectClass('group');
+  var myGroup = group.instance('group:1');
+  myGroup.load('admin').then(function(self) {
     self.$loaded().then(function(self2) {
-      console.log(myIdea.owner.screenName);
-      assert.ok(true);
+      assert.ok(self2.first == "Admin" && self2.last=="Test");
       start();
-    });
+    })
   });
-
-
 });
