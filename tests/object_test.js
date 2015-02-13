@@ -18,7 +18,7 @@ asyncTest("single data pointer evaluates correctly", function(assert) {
   var myGroup = group.instance('group:1');
   myGroup.load('admin').then(function(self) {
     self.$loaded().then(function(self2) {
-      assert.ok(self2.first == "Admin" && self2.last=="Test");
+      assert.ok(self2.first == "Admin" && self2.last=="Test", "the object loaded correctly from the pointer");
       start();
     });
   });
