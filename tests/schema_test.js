@@ -20,4 +20,4 @@ QUnit.test("schema conforms to api", function(assert) {
   assert.ok(testSchema.getConstructor() == testConstructor, "schema stores constructor");
   assert.ok(testSchema.getMethods() == methods, "schema stores list of methods");
   assert.ok(testSchema.getProperties() == null, "schema stores properties");
-})
+});

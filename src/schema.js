@@ -1,6 +1,7 @@
 angular.module('objective-fire')
 
 /*
+ * THIS IS PROBABLY NO LONGER VALID
  * A schema object represents a class of object in the firebase
  * The schema is created with 2 properties: name and location
  *   name is the name of the class (that is what this class of object will be referenced by)
@@ -18,10 +19,10 @@ angular.module('objective-fire')
 
   function Schema(name, fbLoc, objectConstructor, objectMethods, properties) {
     if (!this instanceof Schema) { // failsafe for accidental function call instead of constructor call
-      return new Schema(name, listRef);
+      return new Schema(name, fbLoc, objectConstructor, objectMethods, properties);
     }
     this.name = name;
-    this.listRef = listRef;
+    this.fbLoc = fbLoc;
     this.objectConstructor = objectConstructor;
     this.objectMethods = objectMethods;
     this.properties = properties;
@@ -36,7 +37,7 @@ angular.module('objective-fire')
       return this.name;
     },
     getFBLoc: function() {
-      return this.loc;
+      return this.fbLoc;
     },
     getConstructor: function() {
       return this.objectConstructor;
@@ -46,52 +47,6 @@ angular.module('objective-fire')
     },
     getProperties: function() {
       return this.properties;
-    }
-
-    addDataProperty: function(name, dataType) {
-      console.log("creating property: " + name + " of type: " + dataType);
-      this.properties.normal[name] = dataType;
-      return this;
-    },
-    addPointerDataProperty: function(name, objectClass) {
-      console.log("creating pointer data property: " + name + " of class: " + objectClass);
-      this.properties.pointers.data[name] = {
-        type: "pointerData",
-        object: objectClass
-      };
-      return this;
-    },
-    addPointerListProperty: function(name, objectClass) {
-      console.log("creating pointer list property: " + name + " of class: " + objectClass);
-      this.properties.pointers.list[name] = {
-        type: "pointerList",
-        object: objectClass
-      };
-      return this;
-    },
-    // removes all a property (regardless of if it is normal data or if it is a pointer)
-    // returns true on success, false on failure
-    removeProperty: function(name) {
-      try { //TODO: this method totally doesn't work
-        for (param in this.properties) {
-          this.properties[param][name] = null;
-        }
-        return true;
-      } catch(err) {
-        return false;
-      }
-    },
-    getProperties: function() {
-      return this.properties;
-    },
-    getDataProperties: function() {
-      return this.properties.normal;
-    },
-    getPointerDataProperties: function() {
-      return this.properties.pointers.data;
-    },
-    getPointerListProperties: function() {
-      return this.properties.pointers.list;
     }
   };
   return Schema;

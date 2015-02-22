@@ -1,19 +1,22 @@
 angular.module("objective-fire")
 
-.factory("PointerProperty", function() {
+.factory("PointerObjectProperty", function() {
 
   // type either "object" or "array"
 
-  function Pointer(type, locVisible, locData) {
-    if (!this instanceof Pointer) {
-      return new Pointer(type, locVisible, locData);
+  // typeObject should be the name of the object the pointer resolves to
+
+  function PointerObject(type, locVisible, locData, typeObject) {
+    if (!this instanceof PointerObject) {
+      return new PointerObject(type, locVisible, locData, typeObject);
     }
     this.type = type;
     this.locVisible = locVisible;
     this.locData = locData;
+    this.typeObject = typeObject;
   }
 
-  Pointer.prototype = {
+  PointerObject.prototype = {
     getType: function() {
       return this.type;
     },
@@ -22,10 +25,40 @@ angular.module("objective-fire")
     },
     getLocationData: function() {
       return locData;
+    },
+    getTypeObject: function() {
+      return typeObject;
     }
   };
 
-  return Pointer;
+  return PointerObject;
+
+})
+
+.factory("PointerDataProperty", function() {
+
+  function PointerData(locVisible, locData, fbLoc) {
+    if (!this instanceof PointerData) {
+      return new PointerData(locVisible, locData, fbLoc);
+    }
+    this.locVisible = locVisible;
+    this.locData = locData;
+    this.fbLoc = fbLoc;
+  }
+
+  PointerData.prototype = {
+    getLocationVisible: function() {
+      return locVisible;
+    },
+    getLocationData: function() {
+      return locData;
+    },
+    getFBLoc: function() {
+      return fbLoc;
+    }
+  };
+
+  return PointerData;
 
 })
 
@@ -52,7 +85,7 @@ angular.module("objective-fire")
 
 })
 
-.factory("Properties", function(PointerProperty, NormalProperty) {
+.factory("Properties", function(PointerObjectProperty, PointerDataProperty, NormalProperty) {
   function Properties() {
     if (!this instanceof Properties) { // failsafe for accidental function call instead of constructor call
       return new Properties();
@@ -61,13 +94,14 @@ angular.module("objective-fire")
     this.normal = [];
     this.pointer = {
       obj: [],
-      array: []
+      array: [],
+      data: []
     };
   };
   Properties.prototype = {
     // returns true on success, false on failure
     addProperty: function(property) {
-      if (property instanceof PointerProperty) {
+      if (property instanceof PointerObjectProperty) {
         if (property.type === "object") {
           this.pointer.obj.push(property);
         } else if (property.type === "array") {
@@ -75,6 +109,8 @@ angular.module("objective-fire")
         } else {
           return false;
         }
+      } else if (property instanceof PointerDataProperty) {
+        this.pointer.data.push(property);
       } else if (property instanceof NormalProperty) {
         this.normal.push(property);
       } else {
@@ -83,7 +119,16 @@ angular.module("objective-fire")
       return true;
     },
     getNormalProperties: function() {
-
+      return this.normal;
+    },
+    getPointerObjectProperties: function() {
+      return this.pointer.obj;
+    },
+    getPointerArrayProperties: function() {
+      return this.pointer.array;
+    },
+    getPointerDataProperties: function() {
+      return this.pointer.data;
     }
   };
   return Properties;
