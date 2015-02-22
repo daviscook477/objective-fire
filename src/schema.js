@@ -14,43 +14,40 @@ angular.module('objective-fire')
 
 .factory('Schema', function() {
 
-  console.log("Schema Factory: constructor being defined");
+  // constructor
 
-  function Schema(name, loc) {
+  function Schema(name, fbLoc, objectConstructor, objectMethods, properties) {
+    if (!this instanceof Schema) { // failsafe for accidental function call instead of constructor call
+      return new Schema(name, listRef);
+    }
     this.name = name;
-    this.loc = loc;
-    this.objectConstructor = null;
-    this.properties = {
-      normal: {},
-      pointers: {
-        data: {},
-        list: {}
-      }
-    };
-    console.log("creating schema for '" + name + "' with location in firebase of " + loc);
+    this.listRef = listRef;
+    this.objectConstructor = objectConstructor;
+    this.objectMethods = objectMethods;
+    this.properties = properties;
   }
-
-  console.log("Schema Factory: prototype being defined");
 
   /*
    * All the methods that add something to the schema return the schema so they may be chained together
    */
 
   Schema.prototype = {
-    setConstructor: function(objectConstructor) {
-      console.log("setting constructor");
-      this.objectConstructor = objectConstructor;
-      return this;
-    },
     getName: function() {
       return this.name;
     },
-    getLocation: function() {
+    getFBLoc: function() {
       return this.loc;
     },
     getConstructor: function() {
       return this.objectConstructor;
     },
+    getMethods: function() {
+      return this.objectMethods;
+    },
+    getProperties: function() {
+      return this.properties;
+    }
+
     addDataProperty: function(name, dataType) {
       console.log("creating property: " + name + " of type: " + dataType);
       this.properties.normal[name] = dataType;
@@ -97,8 +94,5 @@ angular.module('objective-fire')
       return this.properties.pointers.list;
     }
   };
-
-  console.log("Schema Factory: returning a reference to the constructor of Schema objects");
-
   return Schema;
 })

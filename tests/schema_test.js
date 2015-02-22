@@ -4,33 +4,20 @@ module("Schema Tests");
 var injector = angular.injector(['ng', 'objective-fire']);
 var Schema = injector.get('Schema');
 
-
-QUnit.test("schema conforms to expected api", function(assert) {
-  var mySchema = new Schema("test", "tests");
-  assert.ok(mySchema, 'can create new schema');
-  assert.ok(mySchema.getName() == "test", 'schema name is correct');
-  assert.ok(mySchema.getLocation() == "tests", 'schema location is correct');
-  var constructor = function() {
-    console.log("Hello World!");
+QUnit.test("schema conforms to api", function(assert) {
+  var name = "test";
+  var fbLoc = new Firebase("https://objective-fire.firebaseio.com/test");
+  var testConstructor = function(myWord) {
+    this.myWord = myWord;
   };
-  mySchema.setConstructor(constructor);
-  assert.ok(mySchema.getConstructor() == constructor, 'schema constructor is correct');
-  // add some data properties
-  mySchema.addDataProperty("potato", "string").addDataProperty("carrot", "number");
-
-  // make sure they are returned in the correct api
-  assert.ok("potato" in mySchema.getDataProperties() &&
-  "carrot" in mySchema.getDataProperties() &&
-  "number" == mySchema.getDataProperties()["carrot"] &&
-  "string" == mySchema.getDataProperties()["potato"], "schema correctly adds data properties");
-
-  mySchema.addPointerDataProperty("owner", 'user');
-  var dp = mySchema.getPointerDataProperties();
-  assert.ok('owner' in dp
-  && 'type' in dp['owner']
-  && 'object' in dp['owner']
-  && dp['owner'].type == 'pointerData'
-  && dp['owner'].object == 'user', 'schema correctly adds data pointers');
-
-  //TODO: test with pointer list properties
-});
+  var testMethod = function() {
+    return myWord;
+  };
+  var methods = [testMethod];
+  var testSchema = new Schema(name, fbLoc, testConstructor, methods, null);
+  assert.ok(testSchema.getName() === name, "schema stores name");
+  assert.ok(testSchema.getFBLoc() === fbLoc, "schema stores location in firebase");
+  assert.ok(testSchema.getConstructor() == testConstructor, "schema stores constructor");
+  assert.ok(testSchema.getMethods() == methods, "schema stores list of methods");
+  assert.ok(testSchema.getProperties() == null, "schema stores properties");
+})
