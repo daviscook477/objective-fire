@@ -13,6 +13,9 @@ angular.module('objective-fire', ['firebase'])
   }
 
   ObjectFire.prototype = {
+    getFBRef: function() {
+      return this.rootRef;
+    },
     // registers an object class
     registerObjectClass: function(schema) {
       this.objects[schema.name] = new FireObject(schema, this.rootRef, this);

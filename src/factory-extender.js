@@ -12,7 +12,7 @@ angular.module('objective-fire')
   // return an object with this one method that creates an extended factory
   return {
     // creates an extended angularjs factory
-    createFactory: function(schema, rootRef, ObjectFire) { // I'm starting to think that we don't need rootRef
+    createFactory: function(schema, rootRef, ObjectFire) {
       // get the lists of the three types of properties from the schema
       var properties = schema.getDataProperties();
       var pointersData = schema.getPointerDataProperties();
