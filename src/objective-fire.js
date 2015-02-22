@@ -5,6 +5,9 @@ angular.module('objective-fire', ['firebase'])
   // this here is just kind of a wrapper for storing all the different types of objects
 
   function ObjectFire(rootRef) {
+    if (!this instanceof ObjectFire) {
+      return new ObjectiFire(rootRef);
+    }
     this.rootRef = rootRef;
     this.objects = {};
   }
