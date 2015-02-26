@@ -1,5 +1,5 @@
 angular.module('objective-fire', ['firebase'])
-.factory('ObjectiveFire', function($q, FireObject) {
+.factory('ObjectiveFire', function(FireObject) {
   /**
   TODO: Define the ObjectiveFire Object
   @class ObjectiveFire

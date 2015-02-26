@@ -1,15 +1,7 @@
+//TODO: make this work, currently it's totally broken
+
 angular.module('objective-fire')
-
 .factory('FactoryExtender', function($FirebaseObject, $firebase, $q, PointerArray) {
-
-  /*
-   * The code in this class is what manipulates the angularfire objects to recognize pointers
-   * Reserved properties of objects is just "pointers"
-   *   At "pointers" the id's of all the pointers are stored
-   *   Then at the specified location of on the object in the schema, the pointer is injected
-   */
-
-  // return an object with this one method that creates an extended factory
   return {
     // creates an extended angularjs factory
     createFactory: function(schema, rootRef, ObjectFire) {

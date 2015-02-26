@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/properties.js - objective-fire</title>
+    <title>ObjectArray - objective-fire</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,138 +82,113 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: src/properties.js</h1>
+<h1>ObjectArray Class</h1>
+<div class="box meta">
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-angular.module(&quot;objective-fire&quot;)
-.factory(&quot;ObjectProperty&quot;, function() {
-  /**
-  Property that is an object
-  @class ObjectProperty
-  @constructor
-  @param name {String} The name of this property
-  @param objectClassName {String} The name of the class of object this property is
-  */
-  function ObjectProperty(name, objectClassName) {
-    if (!this instanceof ObjectProperty) {
-      return new ObjectProperty(name, objectClassName);
-    }
-    /**
-    The name of this property
-    @property name
-    @type {String}
-    */
-    this.name = name;
-    /**
-    The name of the class of object this property is
-    @property objectClassName
-    @type {String}
-    */
-    this.objectClassName = objectClassName;
-  }
-  return ObjectProperty;
-})
-.factory(&quot;ObjectArrayProperty&quot;, function() {
-  /**
-  Property that is an array of objects
-  @class ObjectArrayProperty
-  @constructor
-  @param name {String} The name of this property
-  @param objectClassName {String} The name of the class of object this property is
-  */
-  function ObjectArrayProperty(name, objectClassName) {
-    if (!this instanceof ObjectProperty) {
-      return new ObjectArrayProperty(name, objectClassName);
-    }
-    /**
-    The name of this property
-    @property name
-    @type {String}
-    */
-    this.name = name;
-    /**
-    The name of the class of object this property is
-    @property objectClassName
-    @type {String}
-    */
-    this.objectClassName = objectClassName;
-  }
-  return ObjectArrayProperty;
-})
-.factory(&quot;PrimitiveProperty&quot;, function() {
-  /**
-  Property that is raw data
-  @class PrimitiveProperty
-  @constructor
-  @param name {String} The name of this property
-  */
-  function PrimitiveProperty(name) {
-    if (!this instanceof PrimitiveProperty) {
-      return new PrimitiveProperty(name);
-    }
-    /**
-    The name of this property
-    @property name
-    @type String
-    */
-    this.name = name;
-  }
-  return PrimitiveProperty;
-})
-.factory(&quot;Properties&quot;, function(PrimitiveProperty, ObjectProperty, ObjectArrayProperty) {
-  /**
-  Group of properties
-  @class Properties
-  @constructor
-  */
-  function Properties() {
-    if (!this instanceof Properties) {
-      return new Properties();
-    }
-    /**
-    Array of all the PrimtiveProperty
-    @property primitive
-    @type Array of PrimitiveProperty
-    */
-    this.primitive = [];
-    /**
-    Array of all the ObjectProperty
-    @property objectP
-    @type Array of ObjectProperty
-    */
-    this.objectP = [];
-    /**
-    Array of all the ObjectArrayProperty
-    @property arrayP
-    @type Array of ObjectArrayProperty
-    */
-    this.arrayP = []
-  };
-  Properties.prototype = {
-    /**
-    Adds a property to this group of properties
-    @method addProperty
-    @param property {PrimitiveProperty || ObjectProperty || ObjectArrayProperty} the property to be added
-    @return this
-    @chainable
-    */
-    addProperty: function(property) {
-      if (property instanceof PrimitiveProperty) {
-        this.primitive.push(property);
-      } else if (property instanceof ObjectProperty) {
-        this.objectP.push(property);
-      } else if (property instanceof ObjectArrayProperty) {
-        this.arrayP.push(property);
-      }
-      return this;
-    }
-  };
-  return Properties;
-})
-;
 
-    </pre>
+        <div class="foundat">
+            Defined in: <a href="../files/src_pointer-array.js.html#l18"><code>src&#x2F;pointer-array.js:18</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>An array of objects in the Firebase. The objects are of some class.</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_ObjectArray" class="method item">
+            <h3 class="name"><code>ObjectArray</code></h3>
+        
+                <div class="args">
+                    <span class="paren">(</span><ul class="args-list inline commas">
+                        <li class="arg">
+                                <code>ref</code>
+                        </li>
+                        <li class="arg">
+                                <code>fireObject</code>
+                        </li>
+                    </ul><span class="paren">)</span>
+                </div>
+        
+        
+        
+        
+        
+        
+        
+        
+            <div class="meta">
+                        <p>
+                        Defined in
+                <a href="../files/src_pointer-array.js.html#l18"><code>src&#x2F;pointer-array.js:18</code></a>
+                </p>
+        
+        
+        
+            </div>
+        
+            <div class="description">
+                
+            </div>
+        
+                <div class="params">
+                    <h4>Parameters:</h4>
+        
+                    <ul class="params-list">
+                        <li class="param">
+                                <code class="param-name">ref</code>
+                                <span class="type">Firebase</span>
+        
+        
+                            <div class="param-description">
+                                <p>Firebase reference to the location where this ObjectArray resides</p>
+        
+                            </div>
+        
+                        </li>
+                        <li class="param">
+                                <code class="param-name">fireObject</code>
+                                <span class="type"><a href="../classes/FireObject.html" class="crosslink">FireObject</a></span>
+        
+        
+                            <div class="param-description">
+                                <p>FireObject that is the class that each element of this array will be</p>
+        
+                            </div>
+        
+                        </li>
+                    </ul>
+                </div>
+        
+        
+        
+        </div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+
+
+
+        </div>
+
+
+
+
+    </div>
 </div>
                     </div>
                 </div>
