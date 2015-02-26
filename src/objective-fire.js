@@ -23,7 +23,7 @@ angular.module('objective-fire', ['firebase'])
     */
     this.objects = {};
   }
-  ObjectFire.prototype = {
+  ObjectiveFire.prototype = {
     /**
     Registers a class
     @method registerObjectClass

@@ -16,7 +16,21 @@ module.exports = function(grunt) {
         url: '<%= pkg.homepage %>',
         options: {
           paths: 'src/',
-          outdir: 'build/'
+          outdir: 'docs/'
+        }
+      }
+    },
+    ngAnnotate: {
+      objFire: {
+        files: {
+          'temp/*.js': ['src/*.js']
+        }
+      }
+    },
+    uglify: {
+      objFire: {
+        files: {
+          'build/*.min.js': ['temp/*.js']
         }
       }
     }
@@ -24,8 +38,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
+  grunt.loadNpmTasks('grunt-ng-annotate');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.registerTask('test', ['qunit', 'watch']);
   grunt.registerTask('doc', ['yuidoc']);
-  grunt.registerTask('build', ['test', 'doc']);
+  grunt.registerTask('compile', ['ngAnnotate', 'uglify']);
+  grunt.registerTask('build', ['test', 'doc', 'compile']);
   grunt.registerTask('default', ['build']);
 };
