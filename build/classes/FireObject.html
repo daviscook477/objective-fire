@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Properties - objective-fire</title>
+    <title>FireObject - objective-fire</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -81,12 +81,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>Properties Class</h1>
+<h1>FireObject Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/src_properties.js.html#l77"><code>src&#x2F;properties.js:77</code></a>
+            Defined in: <a href="../files/src_fire-object.js.html#l3"><code>src&#x2F;fire-object.js:3</code></a>
         </div>
 
 
@@ -94,16 +94,28 @@
 
 
 <div class="box intro">
-    <p>Group of properties</p>
+    <p>Object created from class that has methods for creating instances of that class</p>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Properties" class="method item">
-            <h3 class="name"><code>Properties</code></h3>
+        <div id="method_FireObject" class="method item">
+            <h3 class="name"><code>FireObject</code></h3>
         
-                <span class="paren">()</span>
+                <div class="args">
+                    <span class="paren">(</span><ul class="args-list inline commas">
+                        <li class="arg">
+                                <code>objectClass</code>
+                        </li>
+                        <li class="arg">
+                                <code>rootRef</code>
+                        </li>
+                        <li class="arg">
+                                <code>objFire</code>
+                        </li>
+                    </ul><span class="paren">)</span>
+                </div>
         
         
         
@@ -115,7 +127,7 @@
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/src_properties.js.html#l77"><code>src&#x2F;properties.js:77</code></a>
+                <a href="../files/src_fire-object.js.html#l3"><code>src&#x2F;fire-object.js:3</code></a>
                 </p>
         
         
@@ -126,6 +138,45 @@
                 
             </div>
         
+                <div class="params">
+                    <h4>Parameters:</h4>
+        
+                    <ul class="params-list">
+                        <li class="param">
+                                <code class="param-name">objectClass</code>
+                                <span class="type"><a href="../classes/ObjectClass.html" class="crosslink">ObjectClass</a></span>
+        
+        
+                            <div class="param-description">
+                                <p>The class that this FireObject makes</p>
+        
+                            </div>
+        
+                        </li>
+                        <li class="param">
+                                <code class="param-name">rootRef</code>
+                                <span class="type">Firebase</span>
+        
+        
+                            <div class="param-description">
+                                <p>Firebase object that is the root of the Firebase</p>
+        
+                            </div>
+        
+                        </li>
+                        <li class="param">
+                                <code class="param-name">objFire</code>
+                                <span class="type"><a href="../classes/ObjectiveFire.html" class="crosslink">ObjectiveFire</a></span>
+        
+        
+                            <div class="param-description">
+                                <p>References to the ObjectiveFire that made this FireObject</p>
+        
+                            </div>
+        
+                        </li>
+                    </ul>
+                </div>
         
         
         
@@ -149,7 +200,11 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_addProperty">addProperty</a>
+                                <a href="#method_instance">instance</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_new">new</a>
 
                             </li>
                     </ul>
@@ -160,15 +215,19 @@
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_arrayP">arrayP</a>
+                                <a href="#property_factory">factory</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_objectP">objectP</a>
+                                <a href="#property_objectClass">objectClass</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_primitive">primitive</a>
+                                <a href="#property_objFire">objFire</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_rootRef">rootRef</a>
 
                             </li>
                     </ul>
@@ -180,13 +239,13 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_addProperty" class="method item">
-    <h3 class="name"><code>addProperty</code></h3>
+<div id="method_instance" class="method item">
+    <h3 class="name"><code>instance</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>property</code>
+                        <code>id</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -199,13 +258,12 @@
 
 
 
-        <span class="flag chainable">chainable</span>
 
 
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/src_properties.js.html#l106"><code>src&#x2F;properties.js:106</code></a>
+        <a href="../files/src_fire-object.js.html#l58"><code>src&#x2F;fire-object.js:58</code></a>
         </p>
 
 
@@ -213,7 +271,7 @@
     </div>
 
     <div class="description">
-        <p>Adds a property to this group of properties</p>
+        <p>Creates an instance of the class from data existing in the Firebase</p>
 
     </div>
 
@@ -222,12 +280,12 @@
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">property</code>
-                        <span class="type"><a href="../classes/PrimitiveProperty.html" class="crosslink">PrimitiveProperty</a> |  | <a href="../classes/ObjectProperty.html" class="crosslink">ObjectProperty</a> |  | <a href="../classes/ObjectArrayProperty.html" class="crosslink">ObjectArrayProperty</a></span>
+                        <code class="param-name">id</code>
+                        <span class="type">String</span>
 
 
                     <div class="param-description">
-                        <p>the property to be added</p>
+                        <p>The id of this object in the Firebase (it&#39;s key)</p>
 
                     </div>
 
@@ -239,7 +297,50 @@
             <h4>Returns:</h4>
 
             <div class="returns-description">
-                    <p>this</p>
+                    <p>Existing instance of the class</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_new" class="method item">
+    <h3 class="name"><code>new</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_fire-object.js.html#l38"><code>src&#x2F;fire-object.js:38</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Creates a new instance of the class.
+Important: The parameters passed to this method should be those for the class&#39;s constructor</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    <p>New instance of the class</p>
 
             </div>
         </div>
@@ -251,9 +352,9 @@
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_arrayP" class="property item">
-                        <h3 class="name"><code>arrayP</code></h3>
-                        <span class="type">Array of ObjectArrayProperty</span>
+                    <div id="property_factory" class="property item">
+                        <h3 class="name"><code>factory</code></h3>
+                        <span class="type">AngularFire ObjectFactory</span>
                     
                     
                     
@@ -262,23 +363,23 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_properties.js.html#l98"><code>src&#x2F;properties.js:98</code></a>
+                            <a href="../files/src_fire-object.js.html#l31"><code>src&#x2F;fire-object.js:31</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Array of all the ObjectArrayProperty</p>
+                            <p>AngularFire object factory used to create instances of this class</p>
                     
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_objectP" class="property item">
-                        <h3 class="name"><code>objectP</code></h3>
-                        <span class="type">Array of ObjectProperty</span>
+                    <div id="property_objectClass" class="property item">
+                        <h3 class="name"><code>objectClass</code></h3>
+                        <span class="type"><a href="../classes/ObjectClass.html" class="crosslink">ObjectClass</a></span>
                     
                     
                     
@@ -287,23 +388,23 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_properties.js.html#l92"><code>src&#x2F;properties.js:92</code></a>
+                            <a href="../files/src_fire-object.js.html#l12"><code>src&#x2F;fire-object.js:12</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Array of all the ObjectProperty</p>
+                            <p>The class that this FireObject makes</p>
                     
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_primitive" class="property item">
-                        <h3 class="name"><code>primitive</code></h3>
-                        <span class="type">Array of PrimitiveProperty</span>
+                    <div id="property_objFire" class="property item">
+                        <h3 class="name"><code>objFire</code></h3>
+                        <span class="type"><a href="../classes/ObjectiveFire.html" class="crosslink">ObjectiveFire</a></span>
                     
                     
                     
@@ -312,14 +413,39 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_properties.js.html#l86"><code>src&#x2F;properties.js:86</code></a>
+                            <a href="../files/src_fire-object.js.html#l24"><code>src&#x2F;fire-object.js:24</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>Array of all the PrimtiveProperty</p>
+                            <p>Firebase object that is the root of the Firebase</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_rootRef" class="property item">
+                        <h3 class="name"><code>rootRef</code></h3>
+                        <span class="type">Firebase</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_fire-object.js.html#l18"><code>src&#x2F;fire-object.js:18</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Firebase object that is the root of the Firebase</p>
                     
                         </div>
                     

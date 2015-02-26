@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/properties.js - objective-fire</title>
+    <title>src/fire-object.js - objective-fire</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -81,134 +81,84 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: src/properties.js</h1>
+<h1 class="file-heading">File: src/fire-object.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-angular.module(&quot;objective-fire&quot;)
-.factory(&quot;ObjectProperty&quot;, function() {
+angular.module(&#x27;objective-fire&#x27;)
+.factory(&#x27;FireObject&#x27;, function($firebase, FactoryExtender) {
   /**
-  Property that is an object
-  @class ObjectProperty
+  Object created from class that has methods for creating instances of that class
+  @class FireObject
   @constructor
-  @param name {String} The name of this property
-  @param objectClassName {String} The name of the class of object this property is
+  @param objectClass {ObjectClass} The class that this FireObject makes
+  @param rootRef {Firebase} Firebase object that is the root of the Firebase
+  @param objFire {ObjectiveFire} References to the ObjectiveFire that made this FireObject
   */
-  function ObjectProperty(name, objectClassName) {
-    if (!this instanceof ObjectProperty) {
-      return new ObjectProperty(name, objectClassName);
-    }
+  function FireObject(objectClass, rootRef, objFire) {
     /**
-    The name of this property
-    @property name
-    @type {String}
+    The class that this FireObject makes
+    @property objectClass
+    @type ObjectClass
     */
-    this.name = name;
+    this.objectClass = objectClass;
     /**
-    The name of the class of object this property is
-    @property objectClassName
-    @type {String}
+    Firebase object that is the root of the Firebase
+    @property rootRef
+    @type Firebase
     */
-    this.objectClassName = objectClassName;
+    this.rootRef = rootRef;
+    /**
+    Firebase object that is the root of the Firebase
+    @property objFire
+    @type ObjectiveFire
+    */
+    this.objFire = objFire;
+    // create the angularfire factory
+    /**
+    AngularFire object factory used to create instances of this class
+    @property factory
+    @type AngularFire ObjectFactory
+    */
+    this.factory = FactoryExtender.createFactory(this.objectClass, this.rootRef, this.objFire);
   }
-  return ObjectProperty;
-})
-.factory(&quot;ObjectArrayProperty&quot;, function() {
   /**
-  Property that is an array of objects
-  @class ObjectArrayProperty
-  @constructor
-  @param name {String} The name of this property
-  @param objectClassName {String} The name of the class of object this property is
+  Creates a new instance of the class.
+  Important: The parameters passed to this method should be those for the class&#x27;s constructor
+  @method new
+  @return New instance of the class
   */
-  function ObjectArrayProperty(name, objectClassName) {
-    if (!this instanceof ObjectProperty) {
-      return new ObjectArrayProperty(name, objectClassName);
+  FireObject.prototype.new = function() {
+    // obtain the angularfire object
+    var ref = this.rootRef.child(this.objectClass.name).push(); // create a new location for the object we are making
+    var sync = $firebase(ref, { objectFactory: this.factory }); // create the angularfire object using the factory based off this class
+    var obj = sync.$asObject();
+    // construct the new instance
+    obj._doLoad = {}; // this is private property that determines if an object property should be loaded
+    obj.pointers = {}; // this property does something ... not sure what
+    if (this.objectClass.objectConstructor != null) {
+      this.objectClass.objectConstructor.apply(obj, arguments); // call the constructor for new objects
     }
-    /**
-    The name of this property
-    @property name
-    @type {String}
-    */
-    this.name = name;
-    /**
-    The name of the class of object this property is
-    @property objectClassName
-    @type {String}
-    */
-    this.objectClassName = objectClassName;
-  }
-  return ObjectArrayProperty;
-})
-.factory(&quot;PrimitiveProperty&quot;, function() {
-  /**
-  Property that is raw data
-  @class PrimitiveProperty
-  @constructor
-  @param name {String} The name of this property
-  */
-  function PrimitiveProperty(name) {
-    if (!this instanceof PrimitiveProperty) {
-      return new PrimitiveProperty(name);
-    }
-    /**
-    The name of this property
-    @property name
-    @type String
-    */
-    this.name = name;
-  }
-  return PrimitiveProperty;
-})
-.factory(&quot;Properties&quot;, function(PrimitiveProperty, ObjectProperty, ObjectArrayProperty) {
-  /**
-  Group of properties
-  @class Properties
-  @constructor
-  */
-  function Properties() {
-    if (!this instanceof Properties) {
-      return new Properties();
-    }
-    /**
-    Array of all the PrimtiveProperty
-    @property primitive
-    @type Array of PrimitiveProperty
-    */
-    this.primitive = [];
-    /**
-    Array of all the ObjectProperty
-    @property objectP
-    @type Array of ObjectProperty
-    */
-    this.objectP = [];
-    /**
-    Array of all the ObjectArrayProperty
-    @property arrayP
-    @type Array of ObjectArrayProperty
-    */
-    this.arrayP = []
+    obj.$save(); // save the new constructed object
+    return obj;
   };
-  Properties.prototype = {
-    /**
-    Adds a property to this group of properties
-    @method addProperty
-    @param property {PrimitiveProperty || ObjectProperty || ObjectArrayProperty} the property to be added
-    @return this
-    @chainable
-    */
-    addProperty: function(property) {
-      if (property instanceof PrimitiveProperty) {
-        this.primtive.push(property);
-      } else if (property instanceof ObjectProperty) {
-        this.objectP.push(property);
-      } else if (property instanceof ObjectArrayProperty) {
-        this.arrayP.push(property);
-      }
-      return this;
-    }
+  /**
+  Creates an instance of the class from data existing in the Firebase
+  @method instance
+  @param id {String} The id of this object in the Firebase (it&#x27;s key)
+  @return Existing instance of the class
+  */
+  FireObject.prototype.instance = function(id) {
+    // obtain the angularfire object
+    var ref = this.rootRef.child(this.objectClass.name).child(id);
+    var sync = $firebase(ref, { objectFactory: this.factory });
+    var obj = sync.$asObject();
+    // construct the existing instance
+    obj._doLoad = {}; // this is private property that determines if an object property should be loaded
+    obj.pointers = {};
+    return obj;
   };
-  return Properties;
+  return FireObject;
 })
 ;
 

@@ -1,5 +1,4 @@
 angular.module("objective-fire")
-
 .factory("ObjectProperty", function() {
   /**
   Property that is an object

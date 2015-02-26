@@ -6,6 +6,15 @@
         "url": "https://github.com/daviscook477/objective-fire"
     },
     "files": {
+        "src/fire-object.js": {
+            "name": "src/fire-object.js",
+            "modules": {},
+            "classes": {
+                "FireObject": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/object-class.js": {
             "name": "src/object-class.js",
             "modules": {},
@@ -39,6 +48,36 @@
     },
     "modules": {},
     "classes": {
+        "FireObject": {
+            "name": "FireObject",
+            "shortname": "FireObject",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/fire-object.js",
+            "line": 3,
+            "description": "Object created from class that has methods for creating instances of that class",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "objectClass",
+                    "description": "The class that this FireObject makes",
+                    "type": "ObjectClass"
+                },
+                {
+                    "name": "rootRef",
+                    "description": "Firebase object that is the root of the Firebase",
+                    "type": "Firebase"
+                },
+                {
+                    "name": "objFire",
+                    "description": "References to the ObjectiveFire that made this FireObject",
+                    "type": "ObjectiveFire"
+                }
+            ]
+        },
         "ObjectClass": {
             "name": "ObjectClass",
             "shortname": "ObjectClass",
@@ -48,7 +87,8 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/object-class.js",
-            "line": 4,
+            "line": 3,
+            "description": "Class of objects in the database",
             "is_constructor": 1,
             "params": [
                 {
@@ -82,7 +122,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/objective-fire.js",
-            "line": 4,
+            "line": 3,
             "description": "TODO: Define the ObjectiveFire Object",
             "is_constructor": 1,
             "params": [
@@ -102,7 +142,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 4,
+            "line": 3,
             "description": "Property that is an object",
             "is_constructor": 1,
             "params": [
@@ -127,7 +167,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 31,
+            "line": 30,
             "description": "Property that is an array of objects",
             "is_constructor": 1,
             "params": [
@@ -152,7 +192,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 58,
+            "line": 57,
             "description": "Property that is raw data",
             "is_constructor": 1,
             "params": [
@@ -172,12 +212,77 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 78,
+            "line": 77,
             "description": "Group of properties",
             "is_constructor": 1
         }
     },
     "classitems": [
+        {
+            "file": "src/fire-object.js",
+            "line": 12,
+            "description": "The class that this FireObject makes",
+            "itemtype": "property",
+            "name": "objectClass",
+            "type": "ObjectClass",
+            "class": "FireObject"
+        },
+        {
+            "file": "src/fire-object.js",
+            "line": 18,
+            "description": "Firebase object that is the root of the Firebase",
+            "itemtype": "property",
+            "name": "rootRef",
+            "type": "Firebase",
+            "class": "FireObject"
+        },
+        {
+            "file": "src/fire-object.js",
+            "line": 24,
+            "description": "Firebase object that is the root of the Firebase",
+            "itemtype": "property",
+            "name": "objFire",
+            "type": "ObjectiveFire",
+            "class": "FireObject"
+        },
+        {
+            "file": "src/fire-object.js",
+            "line": 31,
+            "description": "AngularFire object factory used to create instances of this class",
+            "itemtype": "property",
+            "name": "factory",
+            "type": "AngularFire ObjectFactory",
+            "class": "FireObject"
+        },
+        {
+            "file": "src/fire-object.js",
+            "line": 38,
+            "description": "Creates a new instance of the class.\nImportant: The parameters passed to this method should be those for the class's constructor",
+            "itemtype": "method",
+            "name": "new",
+            "return": {
+                "description": "New instance of the class"
+            },
+            "class": "FireObject"
+        },
+        {
+            "file": "src/fire-object.js",
+            "line": 58,
+            "description": "Creates an instance of the class from data existing in the Firebase",
+            "itemtype": "method",
+            "name": "instance",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "The id of this object in the Firebase (it's key)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Existing instance of the class"
+            },
+            "class": "FireObject"
+        },
         {
             "file": "src/object-class.js",
             "line": 16,
@@ -212,7 +317,7 @@
         },
         {
             "file": "src/objective-fire.js",
-            "line": 14,
+            "line": 13,
             "description": "Firebase object at the URL that is your Firebase",
             "itemtype": "property",
             "name": "ref",
@@ -221,7 +326,7 @@
         },
         {
             "file": "src/objective-fire.js",
-            "line": 20,
+            "line": 19,
             "description": "Object that contains all registered classes",
             "itemtype": "property",
             "name": "objects",
@@ -230,7 +335,7 @@
         },
         {
             "file": "src/objective-fire.js",
-            "line": 28,
+            "line": 27,
             "description": "Registers a class",
             "itemtype": "method",
             "name": "registerObjectClass",
@@ -249,7 +354,7 @@
         },
         {
             "file": "src/objective-fire.js",
-            "line": 39,
+            "line": 38,
             "description": "Gets the class stored in this ObjectiveFire for the specified name",
             "itemtype": "method",
             "name": "getObjectClass",
@@ -267,7 +372,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 15,
+            "line": 14,
             "description": "The name of this property",
             "itemtype": "property",
             "name": "name",
@@ -276,7 +381,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 21,
+            "line": 20,
             "description": "The name of the class of object this property is",
             "itemtype": "property",
             "name": "objectClassName",
@@ -285,7 +390,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 42,
+            "line": 41,
             "description": "The name of this property",
             "itemtype": "property",
             "name": "name",
@@ -294,7 +399,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 48,
+            "line": 47,
             "description": "The name of the class of object this property is",
             "itemtype": "property",
             "name": "objectClassName",
@@ -303,7 +408,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 68,
+            "line": 67,
             "description": "The name of this property",
             "itemtype": "property",
             "name": "name",
@@ -312,7 +417,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 87,
+            "line": 86,
             "description": "Array of all the PrimtiveProperty",
             "itemtype": "property",
             "name": "primitive",
@@ -321,7 +426,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 93,
+            "line": 92,
             "description": "Array of all the ObjectProperty",
             "itemtype": "property",
             "name": "objectP",
@@ -330,7 +435,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 99,
+            "line": 98,
             "description": "Array of all the ObjectArrayProperty",
             "itemtype": "property",
             "name": "arrayP",
@@ -339,7 +444,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 107,
+            "line": 106,
             "description": "Adds a property to this group of properties",
             "itemtype": "method",
             "name": "addProperty",

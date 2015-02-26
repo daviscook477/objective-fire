@@ -1,7 +1,7 @@
 angular.module('objective-fire')
-
 .factory('ObjectClass', function() {
   /**
+  Class of objects in the database
   @class ObjectClass
   @constructor
   @param name {String} The name by which this class will be referenced throughout ObjectiveFire.
