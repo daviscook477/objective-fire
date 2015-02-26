@@ -1,6 +1,12 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
-    "classes": [],
+    "classes": [
+        "ObjectArrayProperty",
+        "ObjectClass",
+        "ObjectProperty",
+        "PrimitiveProperty",
+        "Properties"
+    ],
     "modules": [],
     "allModules": []
 } };

@@ -25,6 +25,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.registerTask('test', ['qunit', 'watch']);
-  grunt.registerTask('build', ['yuidoc']);
-  grunt.registerTask('default', ['test', 'build']);
+  grunt.registerTask('doc', ['yuidoc']);
+  grunt.registerTask('build', ['test', 'doc']);
+  grunt.registerTask('default', ['build']);
 };

@@ -5,9 +5,273 @@
         "version": "0.0.1",
         "url": "https://github.com/daviscook477/objective-fire"
     },
-    "files": {},
+    "files": {
+        "src/object-class.js": {
+            "name": "src/object-class.js",
+            "modules": {},
+            "classes": {
+                "ObjectClass": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/properties.js": {
+            "name": "src/properties.js",
+            "modules": {},
+            "classes": {
+                "ObjectProperty": 1,
+                "ObjectArrayProperty": 1,
+                "PrimitiveProperty": 1,
+                "Properties": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
     "modules": {},
-    "classes": {},
-    "classitems": [],
+    "classes": {
+        "ObjectClass": {
+            "name": "ObjectClass",
+            "shortname": "ObjectClass",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/object-class.js",
+            "line": 4,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name by which this class will be referenced throughout ObjectiveFire.",
+                    "type": "String"
+                },
+                {
+                    "name": "objectConstructor",
+                    "description": "The constructor that will be used to create instances of this class",
+                    "type": "Function"
+                },
+                {
+                    "name": "objectMethods",
+                    "description": "The methods that will be available on objects of this class",
+                    "type": "Array of Function"
+                },
+                {
+                    "name": "properties",
+                    "description": "The properties that objects of this class will have",
+                    "type": "Properties"
+                }
+            ]
+        },
+        "ObjectProperty": {
+            "name": "ObjectProperty",
+            "shortname": "ObjectProperty",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/properties.js",
+            "line": 4,
+            "description": "Property that is an object",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of this property",
+                    "type": "String"
+                },
+                {
+                    "name": "objectClassName",
+                    "description": "The name of the class of object this property is",
+                    "type": "String"
+                }
+            ]
+        },
+        "ObjectArrayProperty": {
+            "name": "ObjectArrayProperty",
+            "shortname": "ObjectArrayProperty",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/properties.js",
+            "line": 31,
+            "description": "Property that is an array of objects",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of this property",
+                    "type": "String"
+                },
+                {
+                    "name": "objectClassName",
+                    "description": "The name of the class of object this property is",
+                    "type": "String"
+                }
+            ]
+        },
+        "PrimitiveProperty": {
+            "name": "PrimitiveProperty",
+            "shortname": "PrimitiveProperty",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/properties.js",
+            "line": 58,
+            "description": "Property that is raw data",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of this property",
+                    "type": "String"
+                }
+            ]
+        },
+        "Properties": {
+            "name": "Properties",
+            "shortname": "Properties",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/properties.js",
+            "line": 78,
+            "description": "Group of properties",
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/object-class.js",
+            "line": 16,
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "ObjectClass"
+        },
+        {
+            "file": "src/object-class.js",
+            "line": 21,
+            "itemtype": "property",
+            "name": "objectConstructor",
+            "type": "Function",
+            "class": "ObjectClass"
+        },
+        {
+            "file": "src/object-class.js",
+            "line": 26,
+            "itemtype": "property",
+            "name": "objectMethods",
+            "type": "Array of Function",
+            "class": "ObjectClass"
+        },
+        {
+            "file": "src/object-class.js",
+            "line": 31,
+            "itemtype": "property",
+            "name": "properties",
+            "type": "Properties",
+            "class": "ObjectClass"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 15,
+            "description": "The name of this property",
+            "itemtype": "property",
+            "name": "name",
+            "type": "{String}",
+            "class": "ObjectProperty"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 21,
+            "description": "The name of the class of object this property is",
+            "itemtype": "property",
+            "name": "objectClassName",
+            "type": "{String}",
+            "class": "ObjectProperty"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 42,
+            "description": "The name of this property",
+            "itemtype": "property",
+            "name": "name",
+            "type": "{String}",
+            "class": "ObjectArrayProperty"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 48,
+            "description": "The name of the class of object this property is",
+            "itemtype": "property",
+            "name": "objectClassName",
+            "type": "{String}",
+            "class": "ObjectArrayProperty"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 68,
+            "description": "The name of this property",
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "PrimitiveProperty"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 87,
+            "description": "Array of all the PrimtiveProperty",
+            "itemtype": "property",
+            "name": "primitive",
+            "type": "Array of PrimitiveProperty",
+            "class": "Properties"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 93,
+            "description": "Array of all the ObjectProperty",
+            "itemtype": "property",
+            "name": "objectP",
+            "type": "Array of ObjectProperty",
+            "class": "Properties"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 99,
+            "description": "Array of all the ObjectArrayProperty",
+            "itemtype": "property",
+            "name": "arrayP",
+            "type": "Array of ObjectArrayProperty",
+            "class": "Properties"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 107,
+            "description": "Adds a property to this group of properties",
+            "itemtype": "method",
+            "name": "addProperty",
+            "params": [
+                {
+                    "name": "property",
+                    "description": "the property to be added",
+                    "type": "PrimitiveProperty || ObjectProperty || ObjectArrayProperty"
+                }
+            ],
+            "return": {
+                "description": "true on success, false on failure",
+                "type": "Boolean"
+            },
+            "class": "Properties"
+        }
+    ],
     "warnings": []
 }

@@ -1,6 +1,6 @@
 angular.module('objective-fire', ['firebase'])
 
-.factory('ObjectFire', function($q, $injector, FireObject) {
+.factory('ObjectFire', function($q, FireObject) {
 
   // this here is just kind of a wrapper for storing all the different types of objects
 
