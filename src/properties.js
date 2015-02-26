@@ -112,7 +112,7 @@ angular.module("objective-fire")
     */
     addProperty: function(property) {
       if (property instanceof PrimitiveProperty) {
-        this.primtive.push(property);
+        this.primitive.push(property);
       } else if (property instanceof ObjectProperty) {
         this.objectP.push(property);
       } else if (property instanceof ObjectArrayProperty) {

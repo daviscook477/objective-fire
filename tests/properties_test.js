@@ -1,41 +1,45 @@
-module("Property Tests");
+module("Properties Tests");
 
-// obtain angular stuff for testing
-var injector = angular.injector(['ng', 'objective-fire']);
-var Properties = injector.get('Properties');
-var PointerObjectProperty = injector.get('PointerObjectProperty');
-var PointerDataProperty = injector.get('PointerDataProperty');
-var NormalProperty = injector.get('NormalProperty');
-
-// util method for making sure that arrays have the same elements
-
-var arrayElementsSame = function(arr1, arr2) {
-  var same = true;
-  if (arr1.length != arr2.length) {
-    same = false;
-  }
-  for (var i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      same = false;
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
     }
-  }
-  return same;
+    return true;
 }
 
-QUnit.test("properties conforms to api", function(assert) {
-  var myProperty = new Properties();
-  var testObject = new NormalProperty("test", "test");
-  var testPointerObject = new PointerObjectProperty("object", "obj", "obj", null);
-  var testPointerArray = new PointerObjectProperty("array", "arr", "arr", null);
-  var fbLoc = new Firebase("https://objective-fire.firebaseio.com/data");
-  var testPointerData = new PointerDataProperty("data", "data", fbLoc);
-  assert.ok(myProperty.addProperty(testObject), "added normal property");
-  assert.ok(myProperty.addProperty(testPointerObject), "added pointer object property");
-  assert.ok(myProperty.addProperty(testPointerArray), "added pointer array property");
-  assert.ok(myProperty.addProperty(testPointerData), "added pointer data property");
-  assert.ok(!myProperty.addProperty(null), "adding a null property fails");
-  assert.ok(arrayElementsSame(myProperty.getNormalProperties(), [testObject]), "property stores normal properties");
-  assert.ok(arrayElementsSame(myProperty.getPointerObjectProperties(), [testPointerObject]), "property stores pointer objects properties");
-  assert.ok(arrayElementsSame(myProperty.getPointerArrayProperties(), [testPointerArray]), "property stores pointer arrays properties");
-  assert.ok(arrayElementsSame(myProperty.getPointerDataProperties(), [testPointerData]), "property stores pointer datas properties");
+var injector = angular.injector(['ng', 'objective-fire']);
+var Properties = injector.get('Properties');
+var ObjectProperty = injector.get('ObjectProperty');
+var ObjectArrayProperty = injector.get('ObjectArrayProperty');
+var PrimitiveProperty = injector.get('PrimitiveProperty');
+
+QUnit.test("PrimitiveProperty conforms to expected api", function(assert) {
+  var prop = new PrimitiveProperty("test");
+  assert.ok(prop.name === "test", "stores name");
+});
+
+QUnit.test("ObjectProperty conforms to expected api", function(assert) {
+  var prop = new ObjectProperty("test", "Test");
+  assert.ok(prop.name === "test", "stores name");
+  assert.ok(prop.objectClassName === "Test", "stores object class name");
+});
+
+QUnit.test("ObjectArrayProperty conforms to expected api", function(assert) {
+  var prop = new ObjectArrayProperty("test", "Test");
+  assert.ok(prop.name === "test", "stores name");
+  assert.ok(prop.objectClassName === "Test", "stores object class name");
+});
+
+QUnit.test("Properties conforms to expected api", function(assert) {
+  var properties = new Properties();
+  var pp = new PrimitiveProperty("pp");
+  var op = new ObjectProperty("op", "Test");
+  var oap = new ObjectArrayProperty("oap", "Test");
+  properties.addProperty(pp).addProperty(op).addProperty(oap);
+  assert.ok(arraysEqual(properties.primitive, [pp]), "stores primitive properties");
+  assert.ok(arraysEqual(properties.objectP, [op]), "stores object properties");
+  assert.ok(arraysEqual(properties.arrayP, [oap]), "stores object array properties");
 });
