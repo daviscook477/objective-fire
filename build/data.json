@@ -1,0 +1,13 @@
+{
+    "project": {
+        "name": "objective-fire",
+        "description": "This library allows for the data in a firebase to be represented with objects",
+        "version": "0.0.1",
+        "url": "https://github.com/daviscook477/objective-fire"
+    },
+    "files": {},
+    "modules": {},
+    "classes": {},
+    "classitems": [],
+    "warnings": []
+}
