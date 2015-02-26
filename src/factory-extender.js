@@ -12,7 +12,15 @@ angular.module('objective-fire')
   // return an object with this one method that creates an extended factory
   return {
     // creates an extended angularjs factory
-    createFactory: function(schema, rootRef, ObjectFire) { // I'm starting to think that we don't need rootRef
+    createFactory: function(schema, rootRef, ObjectFire) {
+
+      // get the properties from the schema
+      var properties = schema.getProperties();
+      var normalP = properties.getNormalProperties();
+      var objectP = properties.getPointerObjectProperties();
+      var arrayP = properties.getPointerArrayProperties();
+      var dataP = properties.getPointerDataProperties();
+
       // get the lists of the three types of properties from the schema
       var properties = schema.getDataProperties();
       var pointersData = schema.getPointerDataProperties();
@@ -64,9 +72,13 @@ angular.module('objective-fire')
         // now we override the angularfire implementatation of methods in order to make it work with pointers
         $$updated: function(snapshot) {
           var newData = snapshot.val();
-          console.log("data obtained to update is: " + JSON.stringify(newData));
           var changed = false;
           //this method is going to get complicated if I want it to work right...
+
+
+          //TODO: iterate through each property in each list of properties and add the property from the data snapshot to the correct locaiton on this object
+
+          // <========== HERE LIES OLDE CODE =======>
 
           // check for changes in the pointers and update the pointers and respective objects on this
           // set 'chhanged' to true if something changes
@@ -105,6 +117,8 @@ angular.module('objective-fire')
 
           // return if the data was changed
           return changed;
+
+          // <======= HERE ENDS OLD CODE ======>
         }
       });
     }
