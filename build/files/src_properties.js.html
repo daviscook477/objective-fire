@@ -40,6 +40,7 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/ObjectArrayProperty.html">ObjectArrayProperty</a></li>
                                 <li><a href="../classes/ObjectClass.html">ObjectClass</a></li>
+                                <li><a href="../classes/ObjectiveFire.html">ObjectiveFire</a></li>
                                 <li><a href="../classes/ObjectProperty.html">ObjectProperty</a></li>
                                 <li><a href="../classes/PrimitiveProperty.html">PrimitiveProperty</a></li>
                                 <li><a href="../classes/Properties.html">Properties</a></li>
@@ -193,7 +194,8 @@ angular.module(&quot;objective-fire&quot;)
     Adds a property to this group of properties
     @method addProperty
     @param property {PrimitiveProperty || ObjectProperty || ObjectArrayProperty} the property to be added
-    @return {Boolean} true on success, false on failure
+    @return this
+    @chainable
     */
     addProperty: function(property) {
       if (property instanceof PrimitiveProperty) {
@@ -202,15 +204,12 @@ angular.module(&quot;objective-fire&quot;)
         this.objectP.push(property);
       } else if (property instanceof ObjectArrayProperty) {
         this.arrayP.push(property);
-      } else {
-        return false;
       }
-      return true;
+      return this;
     }
   };
   return Properties;
 })
-
 ;
 
     </pre>

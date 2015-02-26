@@ -108,7 +108,8 @@ angular.module("objective-fire")
     Adds a property to this group of properties
     @method addProperty
     @param property {PrimitiveProperty || ObjectProperty || ObjectArrayProperty} the property to be added
-    @return {Boolean} true on success, false on failure
+    @return this
+    @chainable
     */
     addProperty: function(property) {
       if (property instanceof PrimitiveProperty) {
@@ -117,10 +118,8 @@ angular.module("objective-fire")
         this.objectP.push(property);
       } else if (property instanceof ObjectArrayProperty) {
         this.arrayP.push(property);
-      } else {
-        return false;
       }
-      return true;
+      return this;
     }
   };
   return Properties;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ObjectProperty - objective-fire</title>
+    <title>ObjectiveFire - objective-fire</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -80,12 +80,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>ObjectProperty Class</h1>
+<h1>ObjectiveFire Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/src_properties.js.html#l4"><code>src&#x2F;properties.js:4</code></a>
+            Defined in: <a href="../files/src_objective-fire.js.html#l4"><code>src&#x2F;objective-fire.js:4</code></a>
         </div>
 
 
@@ -93,22 +93,19 @@
 
 
 <div class="box intro">
-    <p>Property that is an object</p>
+    <p>TODO: Define the ObjectiveFire Object</p>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_ObjectProperty" class="method item">
-            <h3 class="name"><code>ObjectProperty</code></h3>
+        <div id="method_ObjectiveFire" class="method item">
+            <h3 class="name"><code>ObjectiveFire</code></h3>
         
                 <div class="args">
                     <span class="paren">(</span><ul class="args-list inline commas">
                         <li class="arg">
-                                <code>name</code>
-                        </li>
-                        <li class="arg">
-                                <code>objectClassName</code>
+                                <code>ref</code>
                         </li>
                     </ul><span class="paren">)</span>
                 </div>
@@ -123,7 +120,7 @@
             <div class="meta">
                         <p>
                         Defined in
-                <a href="../files/src_properties.js.html#l4"><code>src&#x2F;properties.js:4</code></a>
+                <a href="../files/src_objective-fire.js.html#l4"><code>src&#x2F;objective-fire.js:4</code></a>
                 </p>
         
         
@@ -139,23 +136,12 @@
         
                     <ul class="params-list">
                         <li class="param">
-                                <code class="param-name">name</code>
-                                <span class="type">String</span>
+                                <code class="param-name">ref</code>
+                                <span class="type">Firebase</span>
         
         
                             <div class="param-description">
-                                <p>The name of this property</p>
-        
-                            </div>
-        
-                        </li>
-                        <li class="param">
-                                <code class="param-name">objectClassName</code>
-                                <span class="type">String</span>
-        
-        
-                            <div class="param-description">
-                                <p>The name of the class of object this property is</p>
+                                <p>Firebase object at the URL that is your Firebase</p>
         
                             </div>
         
@@ -172,6 +158,7 @@
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
     </ul>
 
@@ -179,17 +166,31 @@
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_getObjectClass">getObjectClass</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_registerObjectClass">registerObjectClass</a>
+
+                            </li>
+                    </ul>
+                </div>
 
                 <div class="index-section properties">
                     <h3>Properties</h3>
 
                     <ul class="index-list properties">
                             <li class="index-item property">
-                                <a href="#property_name">name</a>
+                                <a href="#property_objects">objects</a>
 
                             </li>
                             <li class="index-item property">
-                                <a href="#property_objectClassName">objectClassName</a>
+                                <a href="#property_ref">ref</a>
 
                             </li>
                     </ul>
@@ -198,13 +199,148 @@
 
         </div>
 
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_getObjectClass" class="method item">
+    <h3 class="name"><code>getObjectClass</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_objective-fire.js.html#l39"><code>src&#x2F;objective-fire.js:39</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Gets the class stored in this ObjectiveFire for the specified name</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The name of the class</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    <p>the class for the specified name</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_registerObjectClass" class="method item">
+    <h3 class="name"><code>registerObjectClass</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>objectClass</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+        <span class="flag chainable">chainable</span>
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_objective-fire.js.html#l28"><code>src&#x2F;objective-fire.js:28</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Registers a class</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">objectClass</code>
+                        <span class="type"><a href="../classes/ObjectClass.html" class="crosslink">ObjectClass</a></span>
+
+
+                    <div class="param-description">
+                        <p>The class to register</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    <p>this</p>
+
+            </div>
+        </div>
+
+
+</div>
+            </div>
 
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
 
-                    <div id="property_name" class="property item">
-                        <h3 class="name"><code>name</code></h3>
-                        <span class="type">String</span>
+                    <div id="property_objects" class="property item">
+                        <h3 class="name"><code>objects</code></h3>
+                        <span class="type">Object</span>
                     
                     
                     
@@ -213,23 +349,23 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_properties.js.html#l15"><code>src&#x2F;properties.js:15</code></a>
+                            <a href="../files/src_objective-fire.js.html#l20"><code>src&#x2F;objective-fire.js:20</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>The name of this property</p>
+                            <p>Object that contains all registered classes</p>
                     
                         </div>
                     
                     
                     
                     </div>
-                    <div id="property_objectClassName" class="property item">
-                        <h3 class="name"><code>objectClassName</code></h3>
-                        <span class="type">String</span>
+                    <div id="property_ref" class="property item">
+                        <h3 class="name"><code>ref</code></h3>
+                        <span class="type">Firebase</span>
                     
                     
                     
@@ -238,14 +374,14 @@
                         <div class="meta">
                                     <p>
                                     Defined in
-                            <a href="../files/src_properties.js.html#l21"><code>src&#x2F;properties.js:21</code></a>
+                            <a href="../files/src_objective-fire.js.html#l14"><code>src&#x2F;objective-fire.js:14</code></a>
                             </p>
                     
                     
                         </div>
                     
                         <div class="description">
-                            <p>The name of the class of object this property is</p>
+                            <p>Firebase object at the URL that is your Firebase</p>
                     
                         </div>
                     

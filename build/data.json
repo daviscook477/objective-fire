@@ -15,6 +15,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/objective-fire.js": {
+            "name": "src/objective-fire.js",
+            "modules": {},
+            "classes": {
+                "ObjectiveFire": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/properties.js": {
             "name": "src/properties.js",
             "modules": {},
@@ -61,6 +70,26 @@
                     "name": "properties",
                     "description": "The properties that objects of this class will have",
                     "type": "Properties"
+                }
+            ]
+        },
+        "ObjectiveFire": {
+            "name": "ObjectiveFire",
+            "shortname": "ObjectiveFire",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/objective-fire.js",
+            "line": 4,
+            "description": "TODO: Define the ObjectiveFire Object",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "ref",
+                    "description": "Firebase object at the URL that is your Firebase",
+                    "type": "Firebase"
                 }
             ]
         },
@@ -182,6 +211,61 @@
             "class": "ObjectClass"
         },
         {
+            "file": "src/objective-fire.js",
+            "line": 14,
+            "description": "Firebase object at the URL that is your Firebase",
+            "itemtype": "property",
+            "name": "ref",
+            "type": "Firebase",
+            "class": "ObjectiveFire"
+        },
+        {
+            "file": "src/objective-fire.js",
+            "line": 20,
+            "description": "Object that contains all registered classes",
+            "itemtype": "property",
+            "name": "objects",
+            "type": "Object",
+            "class": "ObjectiveFire"
+        },
+        {
+            "file": "src/objective-fire.js",
+            "line": 28,
+            "description": "Registers a class",
+            "itemtype": "method",
+            "name": "registerObjectClass",
+            "params": [
+                {
+                    "name": "objectClass",
+                    "description": "The class to register",
+                    "type": "ObjectClass"
+                }
+            ],
+            "return": {
+                "description": "this"
+            },
+            "chainable": 1,
+            "class": "ObjectiveFire"
+        },
+        {
+            "file": "src/objective-fire.js",
+            "line": 39,
+            "description": "Gets the class stored in this ObjectiveFire for the specified name",
+            "itemtype": "method",
+            "name": "getObjectClass",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The name of the class",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the class for the specified name"
+            },
+            "class": "ObjectiveFire"
+        },
+        {
             "file": "src/properties.js",
             "line": 15,
             "description": "The name of this property",
@@ -267,9 +351,9 @@
                 }
             ],
             "return": {
-                "description": "true on success, false on failure",
-                "type": "Boolean"
+                "description": "this"
             },
+            "chainable": 1,
             "class": "Properties"
         }
     ],
