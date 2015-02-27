@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/fire-object.js - objective-fire</title>
+    <title>FactoryExtender - objective-fire</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -83,96 +83,151 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: src/fire-object.js</h1>
+<h1>FactoryExtender Class</h1>
+<div class="box meta">
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-angular.module(&#x27;objective-fire&#x27;)
-.factory(&#x27;FireObject&#x27;, function($firebase, FactoryExtender) {
-  /**
-  Object created from class that has methods for creating instances of that class
-  @class FireObject
-  @constructor
-  @param objectClass {ObjectClass} The class that this FireObject makes
-  @param rootRef {Firebase} Firebase object that is the root of the Firebase
-  @param objFire {ObjectiveFire} References to the ObjectiveFire that made this FireObject
-  */
-  function FireObject(objectClass, rootRef, objFire) {
-    /**
-    The class that this FireObject makes
-    @property objectClass
-    @type ObjectClass
-    */
-    this.objectClass = objectClass;
-    /**
-    Firebase object that is the root of the Firebase
-    @property rootRef
-    @type Firebase
-    */
-    this.rootRef = rootRef;
-    /**
-    Firebase object that is the root of the Firebase
-    @property objFire
-    @type ObjectiveFire
-    */
-    this.objFire = objFire;
-    // create the angularfire factory
-    /**
-    AngularFire object factory used to create instances of this class
-    @property factory
-    @type AngularFire ObjectFactory
-    */
-    this.factory = FactoryExtender.createFactory(this.objectClass, this.rootRef, this.objFire);
-  }
-  /**
-  Creates a new instance of the class.
-  Important: The parameters passed to this method should be those for the class&#x27;s constructor
-  @method new
-  @return New instance of the class
-  */
-  FireObject.prototype.new = function() {
-    // obtain the angularfire object
-    var ref = this.rootRef.child(this.objectClass.name).push(); // create a new location for the object we are making
-    var sync = $firebase(ref, { objectFactory: this.factory }); // create the angularfire object using the factory based off this class
-    var obj = sync.$asObject();
-    // construct the new instance
-    obj._loaded = false; // private property that states if the object has been loaded
-    obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
-      obj._loaded = true;
-    });
-    obj._doLoad = {}; // this is private property that determines if an object property should be loaded
-    obj.pointers = {}; // this property does something ... not sure what
-    if (this.objectClass.objectConstructor != null) {
-      this.objectClass.objectConstructor.apply(obj, arguments); // call the constructor for new objects
-    }
-    obj.$save(); // save the new constructed object
-    return obj;
-  };
-  /**
-  Creates an instance of the class from data existing in the Firebase
-  @method instance
-  @param id {String} The id of this object in the Firebase (it&#x27;s key)
-  @return Existing instance of the class
-  */
-  FireObject.prototype.instance = function(id) {
-    // obtain the angularfire object
-    var ref = this.rootRef.child(this.objectClass.name).child(id);
-    var sync = $firebase(ref, { objectFactory: this.factory });
-    var obj = sync.$asObject();
-    // construct the existing instance
-    obj._loaded = false; // private property that states if the object has been loaded
-    obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
-      obj._loaded = true;
-    });
-    obj._doLoad = {}; // this is private property that determines if an object property should be loaded
-    obj.pointers = {};
-    return obj;
-  };
-  return FireObject;
-})
-;
 
-    </pre>
+        <div class="foundat">
+            Defined in: <a href="../files/src_factory-extender.js.html#l4"><code>src&#x2F;factory-extender.js:4</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>Helper class that creates extended AngularFire factories</p>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_createFactory">createFactory</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_createFactory" class="method item">
+    <h3 class="name"><code>createFactory</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>objectClass</code>
+                </li>
+                <li class="arg">
+                        <code>rootRef</code>
+                </li>
+                <li class="arg">
+                        <code>objFire</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_factory-extender.js.html#l10"><code>src&#x2F;factory-extender.js:10</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">objectClass</code>
+                        <span class="type"><a href="../classes/ObjectClass.html" class="crosslink">ObjectClass</a></span>
+
+
+                    <div class="param-description">
+                        <p>The class of object the factory will produce</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">rootRef</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Firebase object that is the root of the Firebase</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">objFire</code>
+                        <span class="type"><a href="../classes/ObjectiveFire.html" class="crosslink">ObjectiveFire</a></span>
+
+
+                    <div class="param-description">
+                        <p>References to the ObjectiveFire that made this FireObject</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    <p>AngularFire factory that produces objects of the class objectClass</p>
+
+            </div>
+        </div>
+
+
+</div>
+            </div>
+
+
+
+    </div>
 </div>
                     </div>
                 </div>

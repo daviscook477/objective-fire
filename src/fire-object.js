@@ -47,6 +47,10 @@ angular.module('objective-fire')
     var sync = $firebase(ref, { objectFactory: this.factory }); // create the angularfire object using the factory based off this class
     var obj = sync.$asObject();
     // construct the new instance
+    obj._loaded = false; // private property that states if the object has been loaded
+    obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
+      obj._loaded = true;
+    });
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
     obj.pointers = {}; // this property does something ... not sure what
     if (this.objectClass.objectConstructor != null) {
@@ -67,6 +71,10 @@ angular.module('objective-fire')
     var sync = $firebase(ref, { objectFactory: this.factory });
     var obj = sync.$asObject();
     // construct the existing instance
+    obj._loaded = false; // private property that states if the object has been loaded
+    obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
+      obj._loaded = true;
+    });
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
     obj.pointers = {};
     return obj;

@@ -5,7 +5,9 @@ var ObjectClass = injector.get('ObjectClass');
 
 QUnit.test("ObjectClass conforms to expected api", function(assert) {
   var myConstructor = function() {};
-  var myMethods = [function() {}];
+  var myMethods = {
+    method: function() {}
+  };
   var myProperties = {};
   var myClass = new ObjectClass("test", myConstructor, myMethods, myProperties);
   assert.ok(myClass.name==="test", "stores name");

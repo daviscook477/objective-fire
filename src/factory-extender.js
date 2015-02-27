@@ -1,4 +1,54 @@
 //TODO: make this work, currently it's totally broken
+angular.module('objective-fire')
+.factory('FactoryExtender', function($FirebaseObject, $firebase, $q, ObjectArray) {
+  /**
+  Helper class that creates extended AngularFire factories
+  @class FactoryExtender
+  @static
+  */
+  return {
+    /**
+    Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase
+    @method createFactory
+    @param objectClass {ObjectClass} The class of object the factory will produce
+    @param rootRef Firebase object that is the root of the Firebase
+    @param objFire {ObjectiveFire} References to the ObjectiveFire that made this FireObject
+    @return AngularFire factory that produces objects of the class objectClass
+    */
+    createFactory: function(objectClass, rootRef, objFire) {
+      var template = {};
+      var properties = objectClass.properties;
+      var pps = properties.primitive;
+      var ops = properties.objectP;
+      var aops = properties.arrayP;
+      var methods = objectClass.objectMethods;
+      for (param in methods) { // add the methods to the template for the AngularFire factory
+        template[param] = methods[param];
+      }
+      // not sure how to document this with yuidoc - just use single *
+      /*
+      Method used to load ObjectProperty and ObjectArrayProperty
+      @method $load
+      @param name {String} The name of the property to load
+      @return promise that resolves to the object
+      */
+      template.$load = function(name) {
+        var deffered = $q.defer();
+        this._doLoad[name] = true; // require that the property is loaded
+        if (this._loaded) {
+
+        } else { // if we haven't loaded, it will be loaded when the object is loaded
+          this.$loaded().then(function(self) {
+
+          });
+        }
+        return deffered.promise;
+      }
+    }
+  }
+})
+;
+
 
 angular.module('objective-fire')
 .factory('FactoryExtender', function($FirebaseObject, $firebase, $q, PointerArray) {

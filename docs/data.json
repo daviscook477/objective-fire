@@ -6,11 +6,29 @@
         "url": "https://github.com/daviscook477/objective-fire"
     },
     "files": {
+        "src/factory-extender.js": {
+            "name": "src/factory-extender.js",
+            "modules": {},
+            "classes": {
+                "FactoryExtender": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/fire-object.js": {
             "name": "src/fire-object.js",
             "modules": {},
             "classes": {
                 "FireObject": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/object-array.js": {
+            "name": "src/object-array.js",
+            "modules": {},
+            "classes": {
+                "ObjectArray": 1
             },
             "fors": {},
             "namespaces": {}
@@ -33,15 +51,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/pointer-array.js": {
-            "name": "src/pointer-array.js",
-            "modules": {},
-            "classes": {
-                "ObjectArray": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "src/properties.js": {
             "name": "src/properties.js",
             "modules": {},
@@ -57,6 +66,19 @@
     },
     "modules": {},
     "classes": {
+        "FactoryExtender": {
+            "name": "FactoryExtender",
+            "shortname": "FactoryExtender",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/factory-extender.js",
+            "line": 4,
+            "description": "Helper class that creates extended AngularFire factories",
+            "static": 1
+        },
         "FireObject": {
             "name": "FireObject",
             "shortname": "FireObject",
@@ -87,6 +109,31 @@
                 }
             ]
         },
+        "ObjectArray": {
+            "name": "ObjectArray",
+            "shortname": "ObjectArray",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/object-array.js",
+            "line": 15,
+            "description": "An array of objects in the Firebase. The objects are of some class.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "ref",
+                    "description": "Firebase reference to the location where this ObjectArray resides",
+                    "type": "Firebase"
+                },
+                {
+                    "name": "fireObject",
+                    "description": "FireObject that is the class that each element of this array will be",
+                    "type": "FireObject"
+                }
+            ]
+        },
         "ObjectClass": {
             "name": "ObjectClass",
             "shortname": "ObjectClass",
@@ -112,8 +159,8 @@
                 },
                 {
                     "name": "objectMethods",
-                    "description": "The methods that will be available on objects of this class",
-                    "type": "Array of Function"
+                    "description": "The methods that will be available on objects of this class. They are provided on an object in which the name of the function on that object will be the name of the function on the instances of the class",
+                    "type": "Object with Function"
                 },
                 {
                     "name": "properties",
@@ -139,31 +186,6 @@
                     "name": "ref",
                     "description": "Firebase object at the URL that is your Firebase",
                     "type": "Firebase"
-                }
-            ]
-        },
-        "ObjectArray": {
-            "name": "ObjectArray",
-            "shortname": "ObjectArray",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "file": "src/pointer-array.js",
-            "line": 18,
-            "description": "An array of objects in the Firebase. The objects are of some class.",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "ref",
-                    "description": "Firebase reference to the location where this ObjectArray resides",
-                    "type": "Firebase"
-                },
-                {
-                    "name": "fireObject",
-                    "description": "FireObject that is the class that each element of this array will be",
-                    "type": "FireObject"
                 }
             ]
         },
@@ -253,6 +275,33 @@
     },
     "classitems": [
         {
+            "file": "src/factory-extender.js",
+            "line": 10,
+            "description": "Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase",
+            "itemtype": "method",
+            "name": "createFactory",
+            "params": [
+                {
+                    "name": "objectClass",
+                    "description": "The class of object the factory will produce",
+                    "type": "ObjectClass"
+                },
+                {
+                    "name": "rootRef",
+                    "description": "Firebase object that is the root of the Firebase"
+                },
+                {
+                    "name": "objFire",
+                    "description": "References to the ObjectiveFire that made this FireObject",
+                    "type": "ObjectiveFire"
+                }
+            ],
+            "return": {
+                "description": "AngularFire factory that produces objects of the class objectClass"
+            },
+            "class": "FactoryExtender"
+        },
+        {
             "file": "src/fire-object.js",
             "line": 12,
             "description": "The class that this FireObject makes",
@@ -301,7 +350,7 @@
         },
         {
             "file": "src/fire-object.js",
-            "line": 58,
+            "line": 62,
             "description": "Creates an instance of the class from data existing in the Firebase",
             "itemtype": "method",
             "name": "instance",
@@ -338,7 +387,7 @@
             "line": 26,
             "itemtype": "property",
             "name": "objectMethods",
-            "type": "Array of Function",
+            "type": "Object with Function",
             "class": "ObjectClass"
         },
         {
