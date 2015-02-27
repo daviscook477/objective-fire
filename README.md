@@ -12,7 +12,7 @@ You'll need to have AngularJS, Firebase, and AngularFire all included in your pr
 TODO: Explain how to use ObjectiveFire
 
 ## Development
-Source code is contained in the src/ directory. The built code is in the /build directory. Documentaiton is in the /docs directory.
+Source code is contained in the src directory. The built code is in the build directory. Documentaiton is in the docs directory.
 
 To utilize all the development features you'll need to install the npm and bower dependencies. This would be done by executing the following in the project directory:
 ```terminal
