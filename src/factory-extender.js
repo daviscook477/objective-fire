@@ -32,26 +32,49 @@ angular.module('objective-fire')
       @param name {String} The name of the property to load
       @return promise that resolves to the object
       */
-      template.$load = function(name) {
+      template.$load = function(name) { // TODO: does this trigger angularjs $scope updates - probably not!
         var deffered = $q.defer();
         if (!this._doLoad[name]) { // if property is already loaded don't do anything
+          // find the actual property definition
+          var property = undefined;
+          for (var i = 0; i < ops.length; i++) {
+            if (ops[i].name === name) {
+              property = ops[i];
+              break;
+            }
+          }
+          for (var i = 0; i < oaps.length; i++) {
+            if (oaps[i].name === name) {
+              property = oaps[i];
+              break;
+            }
+          }
           this._doLoad[name] = true; // require that the property is loaded
           if (this._loaded) { // if already loaded then manually load the property
-
+            var objectClassName = property.objectClassName;
+            var objectClass = objFire.getObjectClass(objectClassName);
+            var obj = objectClass.instance(this[name]); // create the object
+            this[name] = obj;
+            this.isLoaded[name] = true;
+            deffered.resolve(obj);
           } else { // if we haven't loaded, it will be loaded when the object is loaded
             // this means that simply changing this._doLoad[name] will load it
 
             // make sure it is actually loaded in the object loading (could not due to synchronization issues (I think))
             this.$loaded().then(function(self) {
-              if (!self[name]) { // if for some reason not loaded manually load the property
-
+              if (!self.isLoaded[name]) { // if for some reason not loaded manually load the property
+                var objectClassName = property.objectClassName;
+                var objectClass = objFire.getObjectClass(objectClassName);
+                var obj = objectClass.instance(self[name]); // create the object
+                self[name] = obj;
               }
-            })
+              self.isLoaded[name] = true;
+              deffered.resolve(this[name]);
+            });
           }
         } else {
           deffered.resolve(this[name]);
         }
-
         return deffered.promise;
       }
       // overrides the function in angularfire TODO: use yuidoc to state that
@@ -71,12 +94,18 @@ angular.module('objective-fire')
           if (this._doLoad[name]) { // only load property if it should be
             var objectClassName = ops[i].objectClassName;
             var objectClass = objFire.getObjectClass(objectClassName);
-            
+            var obj = objectClass.instance(data[name]); // create the object
+            if (!angular.equals(obj, this[name])) {
+              changed = true;
+            }
+            this.isLoaded[name] = true;
+            this[name] = obj;
+          } else {
+            this[name] = data[name];
           }
         }
         return changed;
       }
-
       return $FirebaseObject.$extendFactory(template);
     }
   }

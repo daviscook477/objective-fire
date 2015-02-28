@@ -25,7 +25,8 @@ QUnit.asyncTest("ObjectProperty correctly loaded from test Firebase. NOTE: will 
   var firstName = new PrimitiveProperty("first");
   var lastName = new PrimitiveProperty("last");
   var dog = new ObjectProperty("dog", "dog");
-  userProperties.addProperty(firstName).addProperty(lastName).addProperty(dog);
+  var dog2 = new ObjectProperty("dog2", "dog");
+  userProperties.addProperty(firstName).addProperty(lastName).addProperty(dog).addProperty(dog2);
   var userClass = new ObjectClass("user", userConstructor, userMethods, userProperties);
 
   var objFire = new ObjectiveFire(new Firebase("https://objective-fire.firebaseio.com"));
@@ -33,13 +34,29 @@ QUnit.asyncTest("ObjectProperty correctly loaded from test Firebase. NOTE: will 
   objFire.registerObjectClass(dogClass);
   var User = objFire.getObjectClass("user");
   var myUser = User.instance("user:1");
+  myUser.$load("dog2");
+  var numDelayedLoad = 2;
+  var numLoaded = 0;
   myUser.$loaded().then(function() {
     assert.ok(myUser.first === "Davis", "loaded first property");
     assert.ok(myUser.last === "Cook", "loaded last property");
-    assert.ok(myUser.dog === undefined, "dog is undefined to start")
+    assert.ok(typeof myUser.dog2 === "object", "preloaded dog2 property");
+    assert.ok(typeof myUser.dog !== "object", "dog not preloaded")
+    myUser.dog2.$loaded().then(function() {
+      assert.ok(myUser.dog2.color === "Purple" && myUser.dog2.name === "Imaginary", "loaded dog2 property");
+      numLoaded++;
+      if (numDelayedLoad === numLoaded) {
+        QUnit.start();
+      }
+    });
     myUser.$load("dog").then(function() {
-      assert.ok(myUser.dog.color === "Grey" && myUser.dog.name === "Butch", "loaded dog property");
-      start();
+      myUser.dog.$loaded().then(function() {
+        assert.ok(myUser.dog.color === "Grey" && myUser.dog.name === "Butch", "loaded dog property");
+        numLoaded++;
+        if (numDelayedLoad === numLoaded) {
+          QUnit.start();
+        }
+      });
     });
   });
 });

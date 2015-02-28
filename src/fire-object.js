@@ -51,6 +51,7 @@ angular.module('objective-fire')
     obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
       obj._loaded = true;
     });
+    obj._isLoaded = {};
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
     obj.pointers = {}; // this property does something ... not sure what
     if (this.objectClass.objectConstructor != null) {
@@ -75,6 +76,7 @@ angular.module('objective-fire')
     obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
       obj._loaded = true;
     });
+    obj.isLoaded = {};
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
     obj.pointers = {};
     return obj;
