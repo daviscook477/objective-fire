@@ -54,21 +54,21 @@ angular.module('objective-fire')
             var objectClass = objFire.getObjectClass(objectClassName);
             var obj = objectClass.instance(this[name]); // create the object
             this[name] = obj;
-            this.isLoaded[name] = true;
+            this._isLoaded[name] = true;
             deffered.resolve(obj);
           } else { // if we haven't loaded, it will be loaded when the object is loaded
             // this means that simply changing this._doLoad[name] will load it
 
             // make sure it is actually loaded in the object loading (could not due to synchronization issues (I think))
             this.$loaded().then(function(self) {
-              if (!self.isLoaded[name]) { // if for some reason not loaded manually load the property
+              if (!self._isLoaded[name]) { // if for some reason not loaded manually load the property
                 var objectClassName = property.objectClassName;
                 var objectClass = objFire.getObjectClass(objectClassName);
                 var obj = objectClass.instance(self[name]); // create the object
                 self[name] = obj;
               }
-              self.isLoaded[name] = true;
-              deffered.resolve(this[name]);
+              self._isLoaded[name] = true;
+              deffered.resolve(self[name]);
             });
           }
         } else {
@@ -88,7 +88,7 @@ angular.module('objective-fire')
           }
           this[name] = data[name]; // replace the property
         }
-        for (var i = 0; i < ops.length; i++) {
+        for (var i = 0; i < ops.length; i++) { // replace all object properties
           var name = ops[i].name;
           if (this._doLoad[name]) { // only load property if it should be
             var objectClassName = ops[i].objectClassName;
@@ -97,7 +97,8 @@ angular.module('objective-fire')
             if (!angular.equals(obj, this[name])) {
               changed = true;
             }
-            this.isLoaded[name] = true;
+            console.log(this._isLoaded + " " + name);
+            this._isLoaded[name] = true;
             this[name] = obj;
           } else {
             this[name] = data[name];
@@ -125,7 +126,7 @@ angular.module('objective-fire')
           }
         }
         rootRef.child(objectClass.name).child(this.$id).set(data); // set the data at here in the firebase
-      }
+      };
       return $FirebaseObject.$extendFactory(template);
     }
   }
