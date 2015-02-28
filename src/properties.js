@@ -1,137 +1,126 @@
 angular.module("objective-fire")
-
-.factory("PointerObjectProperty", function() {
-
-  // type either "object" or "array"
-
-  // typeObject should be the name of the object the pointer resolves to
-
-  function PointerObject(type, locVisible, locData, typeObject) {
-    if (!this instanceof PointerObject) {
-      return new PointerObject(type, locVisible, locData, typeObject);
+.factory("ObjectProperty", function() {
+  /**
+  Property that is an object
+  @class ObjectProperty
+  @constructor
+  @param name {String} The name of this property
+  @param objectClassName {String} The name of the class of object this property is
+  */
+  function ObjectProperty(name, objectClassName) {
+    if (!this instanceof ObjectProperty) {
+      return new ObjectProperty(name, objectClassName);
     }
-    this.type = type;
-    this.locVisible = locVisible;
-    this.locData = locData;
-    this.typeObject = typeObject;
+    /**
+    The name of this property
+    @property name
+    @type {String}
+    */
+    this.name = name;
+    /**
+    The name of the class of object this property is
+    @property objectClassName
+    @type {String}
+    */
+    this.objectClassName = objectClassName;
   }
-
-  PointerObject.prototype = {
-    getType: function() {
-      return this.type;
-    },
-    getLocationVisible: function() {
-      return locVisible;
-    },
-    getLocationData: function() {
-      return locData;
-    },
-    getTypeObject: function() {
-      return typeObject;
-    }
-  };
-
-  return PointerObject;
-
+  return ObjectProperty;
 })
-
-.factory("PointerDataProperty", function() {
-
-  function PointerData(locVisible, locData, fbLoc) {
-    if (!this instanceof PointerData) {
-      return new PointerData(locVisible, locData, fbLoc);
+.factory("ObjectArrayProperty", function() {
+  /**
+  Property that is an array of objects
+  @class ObjectArrayProperty
+  @constructor
+  @param name {String} The name of this property
+  @param objectClassName {String} The name of the class of object this property is
+  */
+  function ObjectArrayProperty(name, objectClassName) {
+    if (!this instanceof ObjectProperty) {
+      return new ObjectArrayProperty(name, objectClassName);
     }
-    this.locVisible = locVisible;
-    this.locData = locData;
-    this.fbLoc = fbLoc;
+    /**
+    The name of this property
+    @property name
+    @type {String}
+    */
+    this.name = name;
+    /**
+    The name of the class of object this property is
+    @property objectClassName
+    @type {String}
+    */
+    this.objectClassName = objectClassName;
   }
-
-  PointerData.prototype = {
-    getLocationVisible: function() {
-      return locVisible;
-    },
-    getLocationData: function() {
-      return locData;
-    },
-    getFBLoc: function() {
-      return fbLoc;
-    }
-  };
-
-  return PointerData;
-
+  return ObjectArrayProperty;
 })
-
-.factory("NormalProperty", function() {
-
-  function Normal(locVisible, locData) {
-    if (!this instanceof Normal) {
-      return new Normal(locVisible, locData);
+.factory("PrimitiveProperty", function() {
+  /**
+  Property that is raw data
+  @class PrimitiveProperty
+  @constructor
+  @param name {String} The name of this property
+  */
+  function PrimitiveProperty(name) {
+    if (!this instanceof PrimitiveProperty) {
+      return new PrimitiveProperty(name);
     }
-    this.locVisible = locVisible;
-    this.locData = locData;
+    /**
+    The name of this property
+    @property name
+    @type String
+    */
+    this.name = name;
   }
-
-  Normal.prototype = {
-    getLocationVisible: function() {
-      return locVisible;
-    },
-    getLocationData: function() {
-      return locData;
-    }
-  };
-
-  return Normal;
-
+  return PrimitiveProperty;
 })
-
-.factory("Properties", function(PointerObjectProperty, PointerDataProperty, NormalProperty) {
+.factory("Properties", function(PrimitiveProperty, ObjectProperty, ObjectArrayProperty) {
+  /**
+  Group of properties
+  @class Properties
+  @constructor
+  */
   function Properties() {
-    if (!this instanceof Properties) { // failsafe for accidental function call instead of constructor call
+    if (!this instanceof Properties) {
       return new Properties();
     }
-    // create the object in which properties will be stored
-    this.normal = [];
-    this.pointer = {
-      obj: [],
-      array: [],
-      data: []
-    };
+    /**
+    Array of all the PrimtiveProperty
+    @property primitive
+    @type Array of PrimitiveProperty
+    */
+    this.primitive = [];
+    /**
+    Array of all the ObjectProperty
+    @property objectP
+    @type Array of ObjectProperty
+    */
+    this.objectP = [];
+    /**
+    Array of all the ObjectArrayProperty
+    @property arrayP
+    @type Array of ObjectArrayProperty
+    */
+    this.arrayP = []
   };
   Properties.prototype = {
-    // returns true on success, false on failure
+    /**
+    Adds a property to this group of properties
+    @method addProperty
+    @param property {PrimitiveProperty || ObjectProperty || ObjectArrayProperty} the property to be added
+    @return this
+    @chainable
+    */
     addProperty: function(property) {
-      if (property instanceof PointerObjectProperty) {
-        if (property.type === "object") {
-          this.pointer.obj.push(property);
-        } else if (property.type === "array") {
-          this.pointer.array.push(property);
-        } else {
-          return false;
-        }
-      } else if (property instanceof PointerDataProperty) {
-        this.pointer.data.push(property);
-      } else if (property instanceof NormalProperty) {
-        this.normal.push(property);
-      } else {
-        return false;
+      if (property instanceof PrimitiveProperty) {
+        this.primitive.push(property);
+      } else if (property instanceof ObjectProperty) {
+        this.objectP.push(property);
+      } else if (property instanceof ObjectArrayProperty) {
+        this.arrayP.push(property);
       }
-      return true;
-    },
-    getNormalProperties: function() {
-      return this.normal;
-    },
-    getPointerObjectProperties: function() {
-      return this.pointer.obj;
-    },
-    getPointerArrayProperties: function() {
-      return this.pointer.array;
-    },
-    getPointerDataProperties: function() {
-      return this.pointer.data;
+      return this;
     }
   };
   return Properties;
 })
-
 ;

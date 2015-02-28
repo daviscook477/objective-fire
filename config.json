@@ -1,0 +1,7 @@
+{
+  "devFolder": "src",
+  "tempFolder": "temp",
+  "distFolder": "build",
+  "docFolder": "docs",
+  "testFolder": "tests"
+}
