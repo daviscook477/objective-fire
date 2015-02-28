@@ -20,7 +20,7 @@ angular.module('objective-fire')
       var properties = objectClass.properties;
       var pps = properties.primitive;
       var ops = properties.objectP;
-      var aops = properties.arrayP;
+      var oaps = properties.arrayP;
       var methods = objectClass.objectMethods;
       for (param in methods) { // add the methods to the template for the AngularFire factory
         template[param] = methods[param];
@@ -34,22 +34,48 @@ angular.module('objective-fire')
       */
       template.$load = function(name) {
         var deffered = $q.defer();
-        this._doLoad[name] = true; // require that the property is loaded
-        if (this._loaded) {
+        if (!this._doLoad[name]) { // if property is already loaded don't do anything
+          this._doLoad[name] = true; // require that the property is loaded
+          if (this._loaded) { // if already loaded then manually load the property
 
-        } else { // if we haven't loaded, it will be loaded when the object is loaded
-          this.$loaded().then(function(self) {
+          } else { // if we haven't loaded, it will be loaded when the object is loaded
+            // this means that simply changing this._doLoad[name] will load it
 
-          });
+            // make sure it is actually loaded in the object loading (could not due to synchronization issues (I think))
+            this.$loaded().then(function(self) {
+              if (!self[name]) { // if for some reason not loaded manually load the property
+
+              }
+            })
+          }
+        } else {
+          deffered.resolve(this[name]);
         }
+
         return deffered.promise;
       }
+      // overrides the function in angularfire TODO: use yuidoc to state that
+      template.$$updated = function(snapshot) {
+        var changed = false;
+        var data = snapshot.val();
+        for (var i = 0; i < pps.length; i++) { // replace all primitive properties
+          var name = pps[i].name;
+          // primitives can be compared with ==
+          if (data[name] == this[name]) {
+            changed = true;
+          }
+          this[name] = data[name]; // replace the property
+        }
+        return changed;
+      }
+
+      return $FirebaseObject.$extendFactory(template);
     }
   }
 })
 ;
 
-
+/*
 angular.module('objective-fire')
 .factory('FactoryExtender', function($FirebaseObject, $firebase, $q, PointerArray) {
   return {
@@ -167,3 +193,4 @@ angular.module('objective-fire')
   }
 
 });
+*/

@@ -1,0 +1,9 @@
+var injector = angular.injector(['ng', 'objective-fire']);
+var Properties = injector.get('Properties');
+var ObjectProperty = injector.get('ObjectProperty');
+var ObjectArrayProperty = injector.get('ObjectArrayProperty');
+var PrimitiveProperty = injector.get('PrimitiveProperty');
+var ObjectClass = injector.get('ObjectClass');
+var ObjectiveFire = injector.get('ObjectiveFire');
+var FireObject = injector.get('FireObject');
+var FactoryExtender = injector.get('FactoryExtender');

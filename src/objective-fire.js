@@ -32,7 +32,7 @@ angular.module('objective-fire', ['firebase'])
     @chainable
     */
     registerObjectClass: function(objectClass) {
-      this.objects[objectClass.name] = new FireObject(objetClass, this.ref, this);
+      this.objects[objectClass.name] = new FireObject(objectClass, this.ref, this);
       return this;
     },
     /**

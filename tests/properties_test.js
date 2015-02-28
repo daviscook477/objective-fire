@@ -1,6 +1,6 @@
 module("Properties Tests");
 
-function arraysEqual(arr1, arr2) {
+var arraysEqual = function(arr1, arr2) {
     if(arr1.length !== arr2.length)
         return false;
     for(var i = arr1.length; i--;) {
@@ -9,12 +9,6 @@ function arraysEqual(arr1, arr2) {
     }
     return true;
 }
-
-var injector = angular.injector(['ng', 'objective-fire']);
-var Properties = injector.get('Properties');
-var ObjectProperty = injector.get('ObjectProperty');
-var ObjectArrayProperty = injector.get('ObjectArrayProperty');
-var PrimitiveProperty = injector.get('PrimitiveProperty');
 
 QUnit.test("PrimitiveProperty conforms to expected api", function(assert) {
   var prop = new PrimitiveProperty("test");

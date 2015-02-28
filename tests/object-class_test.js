@@ -1,8 +1,5 @@
 module("ObjectClass Test");
 
-var injector = angular.injector(['ng', 'objective-fire']);
-var ObjectClass = injector.get('ObjectClass');
-
 QUnit.test("ObjectClass conforms to expected api", function(assert) {
   var myConstructor = function() {};
   var myMethods = {

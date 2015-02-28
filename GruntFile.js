@@ -52,6 +52,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['qunit', 'watch']);
   grunt.registerTask('doc', ['yuidoc']);
   grunt.registerTask('compile', ['copy', 'ngAnnotate', 'uglify', 'clean']);
-  grunt.registerTask('build', ['test', 'doc', 'compile']);
+  grunt.registerTask('build', ['qunit', 'doc', 'compile']);
   grunt.registerTask('default', ['build']);
 };
