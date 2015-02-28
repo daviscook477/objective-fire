@@ -35,7 +35,7 @@ angular.module("objective-fire")
   @param objectClassName {String} The name of the class of object this property is
   */
   function ObjectArrayProperty(name, objectClassName) {
-    if (!this instanceof ObjectArrayProperty) {
+    if (!this instanceof ObjectProperty) {
       return new ObjectArrayProperty(name, objectClassName);
     }
     /**
