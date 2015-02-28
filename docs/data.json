@@ -75,7 +75,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/factory-extender.js",
-            "line": 4,
+            "line": 3,
             "description": "Helper class that creates extended AngularFire factories",
             "static": 1
         },
@@ -276,7 +276,7 @@
     "classitems": [
         {
             "file": "src/factory-extender.js",
-            "line": 10,
+            "line": 9,
             "description": "Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase",
             "itemtype": "method",
             "name": "createFactory",
@@ -350,7 +350,7 @@
         },
         {
             "file": "src/fire-object.js",
-            "line": 62,
+            "line": 73,
             "description": "Creates an instance of the class from data existing in the Firebase",
             "itemtype": "method",
             "name": "instance",
