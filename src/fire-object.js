@@ -41,7 +41,7 @@ angular.module('objective-fire')
   @method new
   @return New instance of the class
   */
-  FireObject.prototype.new = function() {
+  FireObject.prototype.new = function() { // TODO: when creating new objects they should automatically have their flags set to loaded
     // obtain the angularfire object
     var ref = this.rootRef.child(this.objectClass.name).push(); // create a new location for the object we are making
     var sync = $firebase(ref, { objectFactory: this.factory }); // create the angularfire object using the factory based off this class
@@ -56,6 +56,16 @@ angular.module('objective-fire')
     obj.pointers = {}; // this property does something ... not sure what
     if (this.objectClass.objectConstructor != null) {
       this.objectClass.objectConstructor.apply(obj, arguments); // call the constructor for new objects
+    }
+    var properties = this.objectClass.properties;
+    var ops = properties.objectP;
+    var oaps = properties.arrayP;
+    for (var i = 0; i < ops.length; i++) {
+      var name = ops[i].name;
+      if (name in obj) {
+        obj._isLoaded[name] = true;
+        obj._doLoad[name] = true;
+      }
     }
     obj.$save(); // save the new constructed object
     return obj;
@@ -76,7 +86,7 @@ angular.module('objective-fire')
     obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
       obj._loaded = true;
     });
-    obj.isLoaded = {};
+    obj._isLoaded = {};
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
     obj.pointers = {};
     return obj;

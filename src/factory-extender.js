@@ -97,7 +97,6 @@ angular.module('objective-fire')
             if (!angular.equals(obj, this[name])) {
               changed = true;
             }
-            console.log(this._isLoaded + " " + name);
             this._isLoaded[name] = true;
             this[name] = obj;
           } else {
