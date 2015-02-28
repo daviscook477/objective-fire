@@ -125,36 +125,55 @@ angular.module(&#x27;objective-fire&#x27;)
         if (!this._doLoad[name]) { // if property is already loaded don&#x27;t do anything
           // find the actual property definition
           var property = undefined;
+          var kind = &quot;&quot;;
           for (var i = 0; i &lt; ops.length; i++) {
             if (ops[i].name === name) {
               property = ops[i];
+              kind = &quot;op&quot;;
               break;
             }
           }
           for (var i = 0; i &lt; oaps.length; i++) {
             if (oaps[i].name === name) {
               property = oaps[i];
+              kind = &quot;oap&quot;;
               break;
             }
           }
           this._doLoad[name] = true; // require that the property is loaded
           if (this._loaded) { // if already loaded then manually load the property
-            var objectClassName = property.objectClassName;
-            var objectClass = objFire.getObjectClass(objectClassName);
-            var obj = objectClass.instance(this[name]); // create the object
-            this[name] = obj;
-            this._isLoaded[name] = true;
-            deffered.resolve(obj);
+            if (kind === &quot;op&quot;) {
+              var objectClassName = property.objectClassName;
+              var objectClass2 = objFire.getObjectClass(objectClassName);
+              var obj = objectClass2.instance(this[name]); // create the object
+              this[name] = obj;
+              this._isLoaded[name] = true;
+              deffered.resolve(this[name]);
+            } else if (kind === &quot;oap&quot;) {
+              var objectClassName = property.objectClassName;
+              var objectClass2 = objFire.getObjectClass(objectClassName);
+              var arr = new ObjectArray(rootRef.child(objectClass.name).child(this.$id).child(name), objectClass2);
+              this[name] = arr;
+              this._isLoaded[name] = true;
+              deffered.resolve(this[name]);
+            }
           } else { // if we haven&#x27;t loaded, it will be loaded when the object is loaded
             // this means that simply changing this._doLoad[name] will load it
 
             // make sure it is actually loaded in the object loading (could not due to synchronization issues (I think))
             this.$loaded().then(function(self) {
               if (!self._isLoaded[name]) { // if for some reason not loaded manually load the property
-                var objectClassName = property.objectClassName;
-                var objectClass = objFire.getObjectClass(objectClassName);
-                var obj = objectClass.instance(self[name]); // create the object
-                self[name] = obj;
+                if (kind === &quot;op&quot;) {
+                  var objectClassName = property.objectClassName;
+                  var objectClass2 = objFire.getObjectClass(objectClassName);
+                  var obj = objectClass2.instance(self[name]); // create the object
+                  self[name] = obj;
+                } else if (kind === &quot;oap&quot;) {
+                  var objectClassName = property.objectClassName;
+                  var objectClass2 = objFire.getObjectClass(objectClassName);
+                  var arr = new ObjectArray(rootRef.child(objectClass.name).child(self.$id).child(name), objectClass2);
+                  self[name] = arr;
+                }
               }
               self._isLoaded[name] = true;
               deffered.resolve(self[name]);
@@ -181,13 +200,28 @@ angular.module(&#x27;objective-fire&#x27;)
           var name = ops[i].name;
           if (this._doLoad[name]) { // only load property if it should be
             var objectClassName = ops[i].objectClassName;
-            var objectClass = objFire.getObjectClass(objectClassName);
-            var obj = objectClass.instance(data[name]); // create the object
+            var objectClass2 = objFire.getObjectClass(objectClassName);
+            var obj = objectClass2.instance(data[name]); // create the object
             if (!angular.equals(obj, this[name])) {
               changed = true;
             }
             this._isLoaded[name] = true;
             this[name] = obj;
+          } else {
+            this[name] = data[name];
+          }
+        }
+        for (var i = 0; i &lt; oaps.length; i++) { // replace all object array properties
+          var name = oaps[i].name;
+          if (this._doLoad[name]) {
+            var objectClassName = oaps[i].objectClassName;
+            var objectClass2 = objFire.getObjectClass(objectClassName);
+            var arr = new ObjectArray(rootRef.child(objectClass.name).child(this.$id).child(name), objectClass2);
+            if (!angular.equals(arr, this[name])) {
+              changed = true;
+            }
+            this._isLoaded[name] = true;
+            this[name] = arr;
           } else {
             this[name] = data[name];
           }
@@ -206,6 +240,17 @@ angular.module(&#x27;objective-fire&#x27;)
             data[name] = this[name].$id;
           } else {
             data[name] = this[name];
+          }
+        }
+        for (var i = 0; i &lt; oaps.length; i++) { // save object array references
+          var name = oaps[i].name;
+          if (typeof this[name] === &quot;object&quot;) {
+            data[name] = [];
+            for (var j = 0; j &lt; oaps[i].length; j++) {
+              data[name][j] = oaps[i][j];
+            }
+          } else {
+            data[name]= this[name];
           }
         }
         for (param in data) { // sanatize firebase input

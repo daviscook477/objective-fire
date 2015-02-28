@@ -118,7 +118,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/object-array.js",
-            "line": 15,
+            "line": 20,
             "description": "An array of objects in the Firebase. The objects are of some class.",
             "is_constructor": 1,
             "params": [

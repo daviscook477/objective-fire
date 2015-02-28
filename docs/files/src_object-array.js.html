@@ -92,12 +92,17 @@ angular.module(&#x27;objective-fire&#x27;)
   var getFactory = function(fireObject) {
     return $FirebaseArray.$extendFactory({
       $$added: function(snapshot) {
-        return fireObject.instance(snapshot.key());
+        return fireObject.instance(snapshot.val());
       },
       $$updated: function(snapshot) {
-        this.$getRecord(snapshot.key()) = fireObject.instance(snapshot.key());
+        var changed = false;
+        var curO = this.$getRecord(snapshot.val());
+        var newO = fireObject.instance(snapshot.val());
+        if (!angular.equals(curO, newO)) {
+          change = true;
+        }
         //TODO: determine if it changes then return that instead of true
-        return true;
+        return changed;
       }
     });
   };
