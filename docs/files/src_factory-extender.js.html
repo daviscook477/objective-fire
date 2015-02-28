@@ -191,7 +191,7 @@ angular.module(&#x27;objective-fire&#x27;)
         for (var i = 0; i &lt; pps.length; i++) { // replace all primitive properties
           var name = pps[i].name;
           // primitives can be compared with ==
-          if (data[name] == this[name]) {
+          if (data[name] !== this[name]) {
             changed = true;
           }
           this[name] = data[name]; // replace the property
