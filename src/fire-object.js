@@ -54,14 +54,23 @@ angular.module('objective-fire')
     obj._isLoaded = {};
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
     obj.pointers = {}; // this property does something ... not sure what
-    if (this.objectClass.objectConstructor != null) {
+    if (this.objectClass.objectConstructor != null && typeof this.objectClass.objectConstructor === "function") {
       this.objectClass.objectConstructor.apply(obj, arguments); // call the constructor for new objects
+    } else {
+      throw "new may only be called for classes that have constructors";
     }
     var properties = this.objectClass.properties;
     var ops = properties.objectP;
     var oaps = properties.arrayP;
     for (var i = 0; i < ops.length; i++) {
       var name = ops[i].name;
+      if (name in obj) {
+        obj._isLoaded[name] = true;
+        obj._doLoad[name] = true;
+      }
+    }
+    for (var i = 0; i < oaps.length; i++) {
+      var name = oaps[i].name;
       if (name in obj) {
         obj._isLoaded[name] = true;
         obj._doLoad[name] = true;

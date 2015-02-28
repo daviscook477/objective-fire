@@ -17,12 +17,19 @@ angular.module('objective-fire')
     createFactory: function(objectClass, rootRef, objFire) {
       var template = {};
       var properties = objectClass.properties;
-      var pps = properties.primitive;
-      var ops = properties.objectP;
-      var oaps = properties.arrayP;
+      var pps, ops, oaps;
+      if (properties === null) {
+        pps = []; ops = []; oaps = [];
+      } else {
+        pps = properties.primitive;
+        ops = properties.objectP;
+        oaps = properties.arrayP;
+      }
       var methods = objectClass.objectMethods;
-      for (param in methods) { // add the methods to the template for the AngularFire factory
-        template[param] = methods[param];
+      if (typeof methods === "object") {
+        for (param in methods) { // add the methods to the template for the AngularFire factory
+          template[param] = methods[param];
+        }
       }
       // not sure how to document this with yuidoc - just use single *
       /*
@@ -33,6 +40,9 @@ angular.module('objective-fire')
       */
       template.$load = function(name) { // TODO: does this trigger angularjs $scope updates - probably not!
         var deffered = $q.defer();
+        if (typeof name !== "string") {
+          throw "name must be of type string";
+        }
         if (!this._doLoad[name]) { // if property is already loaded don't do anything
           // find the actual property definition
           var property = undefined;
@@ -99,6 +109,9 @@ angular.module('objective-fire')
       template.$$updated = function(snapshot) {
         var changed = false;
         var data = snapshot.val();
+        if (data === null) {
+          data = {};
+        }
         for (var i = 0; i < pps.length; i++) { // replace all primitive properties
           var name = pps[i].name;
           // primitives can be compared with ==

@@ -11,6 +11,9 @@ angular.module("objective-fire")
     if (!this instanceof ObjectProperty) {
       return new ObjectProperty(name, objectClassName);
     }
+    if (typeof name !== "string") {
+      throw "name must be of type string";
+    }
     /**
     The name of this property
     @property name
@@ -38,6 +41,9 @@ angular.module("objective-fire")
     if (!this instanceof ObjectArrayProperty) {
       return new ObjectArrayProperty(name, objectClassName);
     }
+    if (typeof name !== "string") {
+      throw "name must be of type string";
+    }
     /**
     The name of this property
     @property name
@@ -63,6 +69,9 @@ angular.module("objective-fire")
   function PrimitiveProperty(name) {
     if (!this instanceof PrimitiveProperty) {
       return new PrimitiveProperty(name);
+    }
+    if (typeof name !== "string") {
+      throw "name must be of type string";
     }
     /**
     The name of this property
@@ -117,6 +126,8 @@ angular.module("objective-fire")
         this.objectP.push(property);
       } else if (property instanceof ObjectArrayProperty) {
         this.arrayP.push(property);
+      } else {
+        throw "property must be of type PrimitiveProperty || ObjectProperty || ObjectArrayProperty";
       }
       return this;
     }

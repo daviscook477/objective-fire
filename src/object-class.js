@@ -13,6 +13,18 @@ angular.module('objective-fire')
     if (!this instanceof ObjectClass) { // failsafe for accidental function call instead of constructor call
       return new ObjectClass(name, objectConstructor, objectMethods, properties);
     }
+    if(typeof name !== "string") {
+      throw "name must be of type string";
+    }
+    if (typeof objectConstructor !== "function" && objectConstructor !== null) {
+      throw "objectConstructor must be of type function or null";
+    }
+    if (typeof objectMethods !== "object" && objectMethods !== null) {
+      throw "objectMethods must be of type object or null";
+    }
+    if (typeof properties !== "object" && properties !== null) {
+      throw "properties must be of type object or null";
+    }
     /**
     @property name
     @type String
