@@ -1,11 +1,12 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'), // the package file to use
+    conf: grunt.file.readJSON('config.json'),
     qunit: {
-      all: ['tests/*.html']
+      all: ['<%=conf.testFolder%>/*.html']
     },
     watch: {
-      files: ['tests/*.js', 'tests/*.html', 'src/*.js'],
+      files: ['<%=conf.testFolder%>/*.js', '<%=conf.testFolder%>/*.html', '<%=conf.devFolder%>/**/*.js'],
       tasks: ['qunit']
     },
     yuidoc: {
@@ -15,24 +16,30 @@ module.exports = function(grunt) {
         version: '<%= pkg.version %>',
         url: '<%= pkg.homepage %>',
         options: {
-          paths: 'src/',
-          outdir: 'docs/'
+          paths: '<%=conf.devFolder%>/',
+          outdir: '<%=conf.docFolder%>/'
         }
+      }
+    },
+    copy: {
+      dist: {
+        files:[{expand: true, cwd:'<%=conf.devFolder%>/', src:'**', dest:'<%=conf.tempFolder%>/'}]
       }
     },
     ngAnnotate: {
       objFire: {
-        files: {
-          'temp/*.js': ['src/*.js']
-        }
+        files: [{expand: true, src:['<%=conf.tempFolder%>/**/*.js']}]
       }
     },
     uglify: {
       objFire: {
         files: {
-          'build/*.min.js': ['temp/*.js']
+          '<%=conf.distFolder%>/objective-fire.min.js': ['<%=conf.tempFolder%>/**/*.js']
         }
       }
+    },
+    clean: {
+      temp: ['<%=conf.tempFolder%>/']
     }
   });
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -40,9 +47,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.registerTask('test', ['qunit', 'watch']);
   grunt.registerTask('doc', ['yuidoc']);
-  grunt.registerTask('compile', ['ngAnnotate', 'uglify']);
+  grunt.registerTask('compile', ['copy', 'ngAnnotate', 'uglify', 'clean']);
   grunt.registerTask('build', ['test', 'doc', 'compile']);
   grunt.registerTask('default', ['build']);
 };
