@@ -100,6 +100,9 @@ angular.module(&quot;objective-fire&quot;)
     if (!this instanceof ObjectProperty) {
       return new ObjectProperty(name, objectClassName);
     }
+    if (typeof name !== &quot;string&quot;) {
+      throw &quot;name must be of type string&quot;;
+    }
     /**
     The name of this property
     @property name
@@ -124,8 +127,11 @@ angular.module(&quot;objective-fire&quot;)
   @param objectClassName {String} The name of the class of object this property is
   */
   function ObjectArrayProperty(name, objectClassName) {
-    if (!this instanceof ObjectProperty) {
+    if (!this instanceof ObjectArrayProperty) {
       return new ObjectArrayProperty(name, objectClassName);
+    }
+    if (typeof name !== &quot;string&quot;) {
+      throw &quot;name must be of type string&quot;;
     }
     /**
     The name of this property
@@ -152,6 +158,9 @@ angular.module(&quot;objective-fire&quot;)
   function PrimitiveProperty(name) {
     if (!this instanceof PrimitiveProperty) {
       return new PrimitiveProperty(name);
+    }
+    if (typeof name !== &quot;string&quot;) {
+      throw &quot;name must be of type string&quot;;
     }
     /**
     The name of this property
@@ -206,6 +215,8 @@ angular.module(&quot;objective-fire&quot;)
         this.objectP.push(property);
       } else if (property instanceof ObjectArrayProperty) {
         this.arrayP.push(property);
+      } else {
+        throw &quot;property must be of type PrimitiveProperty || ObjectProperty || ObjectArrayProperty&quot;;
       }
       return this;
     }

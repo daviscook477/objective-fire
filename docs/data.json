@@ -223,7 +223,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 30,
+            "line": 33,
             "description": "Property that is an array of objects",
             "is_constructor": 1,
             "params": [
@@ -248,7 +248,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 57,
+            "line": 63,
             "description": "Property that is raw data",
             "is_constructor": 1,
             "params": [
@@ -268,7 +268,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/properties.js",
-            "line": 77,
+            "line": 86,
             "description": "Group of properties",
             "is_constructor": 1
         }
@@ -350,7 +350,7 @@
         },
         {
             "file": "src/fire-object.js",
-            "line": 73,
+            "line": 82,
             "description": "Creates an instance of the class from data existing in the Firebase",
             "itemtype": "method",
             "name": "instance",
@@ -368,7 +368,7 @@
         },
         {
             "file": "src/object-class.js",
-            "line": 16,
+            "line": 28,
             "itemtype": "property",
             "name": "name",
             "type": "String",
@@ -376,7 +376,7 @@
         },
         {
             "file": "src/object-class.js",
-            "line": 21,
+            "line": 33,
             "itemtype": "property",
             "name": "objectConstructor",
             "type": "Function",
@@ -384,7 +384,7 @@
         },
         {
             "file": "src/object-class.js",
-            "line": 26,
+            "line": 38,
             "itemtype": "property",
             "name": "objectMethods",
             "type": "Object with Function",
@@ -392,7 +392,7 @@
         },
         {
             "file": "src/object-class.js",
-            "line": 31,
+            "line": 43,
             "itemtype": "property",
             "name": "properties",
             "type": "Properties",
@@ -455,7 +455,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 14,
+            "line": 17,
             "description": "The name of this property",
             "itemtype": "property",
             "name": "name",
@@ -464,25 +464,25 @@
         },
         {
             "file": "src/properties.js",
-            "line": 20,
+            "line": 23,
             "description": "The name of the class of object this property is",
             "itemtype": "property",
             "name": "objectClassName",
             "type": "{String}",
             "class": "ObjectProperty"
-        },
-        {
-            "file": "src/properties.js",
-            "line": 41,
-            "description": "The name of this property",
-            "itemtype": "property",
-            "name": "name",
-            "type": "{String}",
-            "class": "ObjectArrayProperty"
         },
         {
             "file": "src/properties.js",
             "line": 47,
+            "description": "The name of this property",
+            "itemtype": "property",
+            "name": "name",
+            "type": "{String}",
+            "class": "ObjectArrayProperty"
+        },
+        {
+            "file": "src/properties.js",
+            "line": 53,
             "description": "The name of the class of object this property is",
             "itemtype": "property",
             "name": "objectClassName",
@@ -491,7 +491,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 67,
+            "line": 76,
             "description": "The name of this property",
             "itemtype": "property",
             "name": "name",
@@ -500,7 +500,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 86,
+            "line": 95,
             "description": "Array of all the PrimtiveProperty",
             "itemtype": "property",
             "name": "primitive",
@@ -509,7 +509,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 92,
+            "line": 101,
             "description": "Array of all the ObjectProperty",
             "itemtype": "property",
             "name": "objectP",
@@ -518,7 +518,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 98,
+            "line": 107,
             "description": "Array of all the ObjectArrayProperty",
             "itemtype": "property",
             "name": "arrayP",
@@ -527,7 +527,7 @@
         },
         {
             "file": "src/properties.js",
-            "line": 106,
+            "line": 115,
             "description": "Adds a property to this group of properties",
             "itemtype": "method",
             "name": "addProperty",

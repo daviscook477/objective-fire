@@ -34,12 +34,12 @@ module.exports = function(grunt) {
     uglify: {
       objFire: {
         files: {
-          '<%=conf.distFolder%>/objective-fire.min.js': ['<%=conf.tempFolder%>/**/*.js'],
+          '<%=conf.distFolder%>/objective-fire.min.js': ['<%=conf.tempFolder%>/objective-fire.js', '<%=conf.tempFolder%>/**/*.js'],
         }
       },
       a: {
         files: {
-          '<%=conf.distFolder%>/objective-fire.js': ['<%=conf.tempFolder%>/**/*.js'],
+          '<%=conf.distFolder%>/objective-fire.js': ['<%=conf.tempFolder%>/objective-fire.js', '<%=conf.tempFolder%>/**/*.js'],
         },
         options: {
           mangle: false
