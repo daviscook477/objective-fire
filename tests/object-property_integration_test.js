@@ -96,6 +96,16 @@ QUnit.asyncTest("ObjectProperty correctly created to test Firebase. NOTE: will f
   objFire.registerObjectClass(dogClass);
   var User = objFire.getObjectClass("user");
   var myUser = User.new("Test", "User", {name: "Test Dog", color: "Blue"});
-  assert.ok(true); // TODO: actually test if the created things were created
-  QUnit.start();
+  var ref = new Firebase("https://objective-fire.firebaseio.com").child("user");
+  myUser.$loaded().then(function() {
+    var id = myUser.$id;
+    var ref2 = ref.child(id);
+    ref2.on("value", function(snapshot) {
+      var data = snapshot.val();
+      assert.ok(data.first === "Test", "first property created");
+      assert.ok(data.last === "User", "last property created");
+      QUnit.start();
+    });
+    // TODO: make it check if the dog was made
+  });
 });
