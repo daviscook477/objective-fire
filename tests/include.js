@@ -7,3 +7,4 @@ var ObjectClass = injector.get('ObjectClass');
 var ObjectiveFire = injector.get('ObjectiveFire');
 var FireObject = injector.get('FireObject');
 var FactoryExtender = injector.get('FactoryExtender');
+var ObjectArray = injector.get('ObjectArray');

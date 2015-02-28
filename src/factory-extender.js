@@ -55,15 +55,15 @@ angular.module('objective-fire')
           if (this._loaded) { // if already loaded then manually load the property
             if (kind === "op") {
               var objectClassName = property.objectClassName;
-              var objectClass = objFire.getObjectClass(objectClassName);
-              var obj = objectClass.instance(this[name]); // create the object
+              var objectClass2 = objFire.getObjectClass(objectClassName);
+              var obj = objectClass2.instance(this[name]); // create the object
               this[name] = obj;
               this._isLoaded[name] = true;
               deffered.resolve(this[name]);
             } else if (kind === "oap") {
               var objectClassName = property.objectClassName;
-              var objectClass = objFire.getObjectClass(objectClassName);
-              var arr = new ObjectArray(this.rootRef.child(objectClass.name).child(this.$id).child(name), objectClass);
+              var objectClass2 = objFire.getObjectClass(objectClassName);
+              var arr = new ObjectArray(rootRef.child(objectClass.name).child(this.$id).child(name), objectClass2);
               this[name] = arr;
               this._isLoaded[name] = true;
               deffered.resolve(this[name]);
@@ -76,13 +76,13 @@ angular.module('objective-fire')
               if (!self._isLoaded[name]) { // if for some reason not loaded manually load the property
                 if (kind === "op") {
                   var objectClassName = property.objectClassName;
-                  var objectClass = objFire.getObjectClass(objectClassName);
-                  var obj = objectClass.instance(self[name]); // create the object
+                  var objectClass2 = objFire.getObjectClass(objectClassName);
+                  var obj = objectClass2.instance(self[name]); // create the object
                   self[name] = obj;
                 } else if (kind === "oap") {
                   var objectClassName = property.objectClassName;
-                  var objectClass = objFire.getObjectClass(objectClassName);
-                  var arr = new ObjectArray(self.rootRef.child(objectClass.name).child(self.$id).child(name), objectClass);
+                  var objectClass2 = objFire.getObjectClass(objectClassName);
+                  var arr = new ObjectArray(rootRef.child(objectClass.name).child(self.$id).child(name), objectClass2);
                   self[name] = arr;
                 }
               }
@@ -111,8 +111,8 @@ angular.module('objective-fire')
           var name = ops[i].name;
           if (this._doLoad[name]) { // only load property if it should be
             var objectClassName = ops[i].objectClassName;
-            var objectClass = objFire.getObjectClass(objectClassName);
-            var obj = objectClass.instance(data[name]); // create the object
+            var objectClass2 = objFire.getObjectClass(objectClassName);
+            var obj = objectClass2.instance(data[name]); // create the object
             if (!angular.equals(obj, this[name])) {
               changed = true;
             }
@@ -125,9 +125,9 @@ angular.module('objective-fire')
         for (var i = 0; i < oaps.length; i++) { // replace all object array properties
           var name = oaps[i].name;
           if (this._doLoad[name]) {
-            var objectClassName = ops[i].objectClassName;
-            var objectClass = objFire.getObjectClass(objectClassName);
-            var arr = new ObjectArray(this.rootRef.child(objectClass.name).child(this.$id).child(name), objectClass);
+            var objectClassName = oaps[i].objectClassName;
+            var objectClass2 = objFire.getObjectClass(objectClassName);
+            var arr = new ObjectArray(rootRef.child(objectClass.name).child(this.$id).child(name), objectClass2);
             if (!angular.equals(arr, this[name])) {
               changed = true;
             }
