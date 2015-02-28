@@ -60,3 +60,42 @@ QUnit.asyncTest("ObjectProperty correctly loaded from test Firebase. NOTE: will 
     });
   });
 });
+
+QUnit.asyncTest("ObjectProperty correctly created to test Firebase. NOTE: will fail if connection cannot be made to Firebase", function(assert) {
+  var objFire = new ObjectiveFire(new Firebase("https://objective-fire.firebaseio.com"));
+  var dogConstructor = function(name, color) {
+    this.name = name;
+    this.color = color;
+  };
+  var dogMethods = {
+    description: function() {return this.name + " is " + this.color;}
+  };
+  dogProperties = new Properties();
+  var name = new PrimitiveProperty("name");
+  var color = new PrimitiveProperty("color");
+  dogProperties.addProperty(name).addProperty(color);
+  var dogClass = new ObjectClass("dog", dogConstructor, dogMethods, dogProperties);
+
+  var userConstructor = function(first, last, dog) {
+    this.first = first;
+    this.last = last;
+    this.dog = objFire.getObjectClass("dog").new(dog.name, dog.color);
+  };
+  var userMethods = {
+    fullName: function() {return this.first + " " + this.last;}
+  };
+  var userProperties = new Properties();
+  var firstName = new PrimitiveProperty("first");
+  var lastName = new PrimitiveProperty("last");
+  var dog = new ObjectProperty("dog", "dog");
+  var dog2 = new ObjectProperty("dog2", "dog");
+  userProperties.addProperty(firstName).addProperty(lastName).addProperty(dog).addProperty(dog2);
+  var userClass = new ObjectClass("user", userConstructor, userMethods, userProperties);
+
+  objFire.registerObjectClass(userClass);
+  objFire.registerObjectClass(dogClass);
+  var User = objFire.getObjectClass("user");
+  var myUser = User.new("Test", "User", {name: "Test Dog", color: "Blue"});
+  assert.ok(true); // TODO: actually test if the created things were created
+  QUnit.start();
+});
