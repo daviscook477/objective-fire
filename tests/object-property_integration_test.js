@@ -96,15 +96,15 @@ QUnit.asyncTest("ObjectProperty correctly created to test Firebase. NOTE: will f
   var User = objFire.getObjectClass("user");
   var myUser = User.new("Test", "User", {name: "Test Dog", color: "Blue"});
   var ref = new Firebase("https://objective-fire.firebaseio.com");
-  var numDelayedLoad = 1;
+  var numDelayedLoad = 2;
   var numLoaded = 0;
   myUser.$loaded().then(function() {
     var id = myUser.$id;
     var ref2 = ref.child("user").child(id);
-  /*  myUser.dog.$loaded().then(function() {
+    myUser.dog.$loaded().then(function() {
       var id2 = myUser.dog.$id;
       var ref3 = ref.child("dog").child(id2);
-      ref3.on(value, function(snapshot) {
+      ref3.on("value", function(snapshot) {
         var data2 = snapshot.val();
         assert.ok(data2.name === "Test Dog", "name property created of dog");
         assert.ok(data2.color === "Blue", "color property created of dog");
@@ -113,7 +113,7 @@ QUnit.asyncTest("ObjectProperty correctly created to test Firebase. NOTE: will f
           QUnit.start();
         }
       });
-    });*/
+    });
     ref2.on("value", function(snapshot) {
       var data = snapshot.val();
       assert.ok(data.first === "Test", "first property created");
