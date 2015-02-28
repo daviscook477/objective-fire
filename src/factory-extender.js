@@ -66,6 +66,14 @@ angular.module('objective-fire')
           }
           this[name] = data[name]; // replace the property
         }
+        for (var i = 0; i < ops.length; i++) {
+          var name = ops[i].name;
+          if (this._doLoad[name]) { // only load property if it should be
+            var objectClassName = ops[i].objectClassName;
+            var objectClass = objFire.getObjectClass(objectClassName);
+            
+          }
+        }
         return changed;
       }
 

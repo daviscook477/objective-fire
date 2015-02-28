@@ -1,9 +1,12 @@
 module("PrimitiveProperty Integration Test");
 
 QUnit.asyncTest("PrimitiveProperty correctly loaded from test Firebase. NOTE: will fail if connection cannot be made to Firebase", function(assert) {
-  var myConstructor = function() {};
+  var myConstructor = function(first, last) {
+    this.first = first;
+    this.last = last;
+  };
   var myMethods = {
-    method: function() {}
+    fullName: function() {return first + " " + last}
   };
   var myProperties = new Properties();
   var firstName = new PrimitiveProperty("first");
@@ -17,6 +20,6 @@ QUnit.asyncTest("PrimitiveProperty correctly loaded from test Firebase. NOTE: wi
   myUser.$loaded().then(function() {
     assert.ok(myUser.first === "Davis", "loaded first property");
     assert.ok(myUser.last === "Cook", "loaded last property");
-    start();
+    QUnit.start();
   });
 });
