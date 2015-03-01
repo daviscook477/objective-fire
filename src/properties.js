@@ -109,8 +109,8 @@ angular.module("objective-fire")
     @property arrayP
     @type Array of ObjectArrayProperty
     */
-    this.arrayP = []
-  };
+    this.arrayP = [];
+  }
   Properties.prototype = {
     /**
     Adds a property to this group of properties

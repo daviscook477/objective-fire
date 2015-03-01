@@ -3,7 +3,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'), // the package file to use
     conf: grunt.file.readJSON('config.json'),
     qunit: {
-      all: ['<%=conf.testFolder%>/*.html']
+      src: ['<%=conf.testFolder%>/src.html'],
+      build: ['<%=conf.testFolder%>/build.html'],
+      build_min: ['<%=conf.testFolder%>/build-min.html']
     },
     watch: {
       files: ['<%=conf.testFolder%>/*.js', '<%=conf.testFolder%>/*.html', '<%=conf.devFolder%>/**/*.js'],
@@ -27,17 +29,17 @@ module.exports = function(grunt) {
       }
     },
     ngAnnotate: {
-      objFire: {
+      src: {
         files: [{expand: true, src:['<%=conf.tempFolder%>/**/*.js']}]
       }
     },
     uglify: {
-      objFire: {
+      mangle: {
         files: {
           '<%=conf.distFolder%>/objective-fire.min.js': ['<%=conf.tempFolder%>/objective-fire.js', '<%=conf.tempFolder%>/**/*.js'],
         }
       },
-      a: {
+      no_mangle: {
         files: {
           '<%=conf.distFolder%>/objective-fire.js': ['<%=conf.tempFolder%>/objective-fire.js', '<%=conf.tempFolder%>/**/*.js'],
         },
@@ -48,6 +50,9 @@ module.exports = function(grunt) {
     },
     clean: {
       temp: ['<%=conf.tempFolder%>/']
+    },
+    jshint: {
+      src: ['<%=conf.devFolder%>/**/*.js']
     }
   });
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -57,9 +62,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.registerTask('test', ['qunit', 'watch']);
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.registerTask('test', ['qunit:src', 'watch']);
   grunt.registerTask('doc', ['yuidoc']);
+  grunt.registerTask('hint', ['jshint']);
+  grunt.registerTask('check', ['hint', 'qunit']);
   grunt.registerTask('compile', ['copy', 'ngAnnotate', 'uglify', 'clean']);
-  grunt.registerTask('build', ['qunit', 'doc', 'compile']);
+  grunt.registerTask('build', ['qunit:src', 'doc', 'compile', 'qunit:build', 'qunit:build_min']);
   grunt.registerTask('default', ['build']);
 };

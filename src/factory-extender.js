@@ -27,7 +27,7 @@ angular.module('objective-fire')
       }
       var methods = objectClass.objectMethods;
       if (typeof methods === "object") {
-        for (param in methods) { // add the methods to the template for the AngularFire factory
+        for (var param in methods) { // add the methods to the template for the AngularFire factory
           template[param] = methods[param];
         }
       }
@@ -104,7 +104,7 @@ angular.module('objective-fire')
           deffered.resolve(this[name]);
         }
         return deffered.promise;
-      }
+      };
       // overrides the function in angularfire TODO: use yuidoc to state that
       template.$$updated = function(snapshot) {
         var changed = false;
@@ -177,7 +177,7 @@ angular.module('objective-fire')
             data[name]= this[name];
           }
         }
-        for (param in data) { // sanatize firebase input
+        for (var param in data) { // sanatize firebase input
           if (data[param] === undefined) {
             data[param] = null;
           }
@@ -186,6 +186,6 @@ angular.module('objective-fire')
       };
       return $FirebaseObject.$extendFactory(template);
     }
-  }
+  };
 })
 ;

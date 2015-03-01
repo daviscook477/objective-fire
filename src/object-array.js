@@ -28,5 +28,5 @@ angular.module('objective-fire')
     var sync = $firebase(ref, { arrayFactory: getFactory(fireObject) });
     var obj = sync.$asArray();
     return obj;
-  }
+  };
 });
