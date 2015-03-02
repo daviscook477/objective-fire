@@ -88,7 +88,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 angular.module(&#x27;objective-fire&#x27;)
-.factory(&#x27;FactoryExtender&#x27;, function($FirebaseObject, $firebase, $q, ObjectArray) {
+.factory(&#x27;FactoryExtender&#x27;, function($firebaseObject, $q, ObjectArray) {
   /**
   Helper class that creates extended AngularFire factories
   @class FactoryExtender
@@ -97,13 +97,13 @@ angular.module(&#x27;objective-fire&#x27;)
   return {
     /**
     Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase
-    @method createFactory
+    @method createObjectFactory
     @param objectClass {ObjectClass} The class of object the factory will produce
     @param rootRef Firebase object that is the root of the Firebase
     @param objFire {ObjectiveFire} References to the ObjectiveFire that made this FireObject
     @return AngularFire factory that produces objects of the class objectClass
     */
-    createFactory: function(objectClass, rootRef, objFire) {
+    createObjectFactory: function(objectClass, rootRef, objFire) {
       var template = {};
       var properties = objectClass.properties;
       var pps, ops, oaps;
@@ -273,7 +273,7 @@ angular.module(&#x27;objective-fire&#x27;)
         }
         rootRef.child(objectClass.name).child(this.$id).set(data); // set the data at here in the firebase
       };
-      return $FirebaseObject.$extendFactory(template);
+      return $firebaseObject.$extend(template);
     }
   };
 })

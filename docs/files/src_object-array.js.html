@@ -88,9 +88,9 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 angular.module(&#x27;objective-fire&#x27;)
-.factory(&#x27;ObjectArray&#x27;, function($FirebaseArray, $firebase) {
+.factory(&#x27;ObjectArray&#x27;, function($firebaseArray) {
   var getFactory = function(fireObject) {
-    return $FirebaseArray.$extendFactory({
+    return $firebaseArray.$extend({
       $$added: function(snapshot) {
         return fireObject.instance(snapshot.val());
       },
@@ -113,8 +113,7 @@ angular.module(&#x27;objective-fire&#x27;)
   @param fireObject {FireObject} FireObject that is the class that each element of this array will be
   */
   return function(ref, fireObject) {
-    var sync = $firebase(ref, { arrayFactory: getFactory(fireObject) });
-    var obj = sync.$asArray();
+    var obj = new getFactory(fireObject);
     return obj;
   };
 });

@@ -1,5 +1,5 @@
 angular.module('objective-fire')
-.factory('FireObject', function($firebaseObject) {
+.factory('FireObject', function(Factories) {
   /**
   Object created from class that has methods for creating instances of that class
   @class FireObject
@@ -27,8 +27,8 @@ angular.module('objective-fire')
     @type ObjectiveFire
     */
     this.objFire = objFire;
-
-    this.Factory = FactoryExtender.createObjectFactory(objectClass, rootRef, objFire);
+    // not documented because it is private
+    this.Factory = Factories.objectFactory(objectClass, rootRef, objFire);
   }
   /**
   Creates a new instance of the class.

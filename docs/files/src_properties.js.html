@@ -87,7 +87,7 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-angular.module(&quot;objective-fire&quot;)
+angular.module(&#x27;objective-fire&#x27;)
 .factory(&quot;ObjectProperty&quot;, function() {
   /**
   Property that is an object
@@ -219,6 +219,28 @@ angular.module(&quot;objective-fire&quot;)
         throw &quot;property must be of type PrimitiveProperty || ObjectProperty || ObjectArrayProperty&quot;;
       }
       return this;
+    },
+    // TODO: doc these and test them
+    addPrimitiveProperty: function(name) {
+      if (!typeof name === &quot;string&quot;) {
+        throw &quot;name must have type of string&quot;;
+      } else {
+        this.primitive.push(new PrimitiveProperty(name));
+      }
+    },
+    addObjectProperty: function(name, objectClassName) {
+      if (!typeof name === &quot;string&quot;) {
+        throw &quot;name must have type of string&quot;;
+      } else {
+        this.objectP.push(new ObjectProperty(name, objectClassName));
+      }
+    },
+    addObjectArrayProperty: function(name, objectClassName) {
+      if (!typeof name === &quot;string&quot;) {
+        throw &quot;name must have type of string&quot;;
+      } else {
+        this.arrayP.push(new ObjectArrayProperty(name, objectClassName));
+      }
     }
   };
   return Properties;

@@ -279,7 +279,7 @@
             "line": 9,
             "description": "Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase",
             "itemtype": "method",
-            "name": "createFactory",
+            "name": "createObjectFactory",
             "params": [
                 {
                     "name": "objectClass",
@@ -330,16 +330,7 @@
         },
         {
             "file": "src/fire-object.js",
-            "line": 31,
-            "description": "AngularFire object factory used to create instances of this class",
-            "itemtype": "property",
-            "name": "factory",
-            "type": "AngularFire ObjectFactory",
-            "class": "FireObject"
-        },
-        {
-            "file": "src/fire-object.js",
-            "line": 38,
+            "line": 33,
             "description": "Creates a new instance of the class.\nImportant: The parameters passed to this method should be those for the class's constructor",
             "itemtype": "method",
             "name": "new",
@@ -350,7 +341,7 @@
         },
         {
             "file": "src/fire-object.js",
-            "line": 82,
+            "line": 77,
             "description": "Creates an instance of the class from data existing in the Firebase",
             "itemtype": "method",
             "name": "instance",
