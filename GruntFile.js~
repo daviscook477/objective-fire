@@ -6,7 +6,7 @@ module.exports = function(grunt) {
       src: ['<%=conf.testFolder%>/src.html'],
       build: ['<%=conf.testFolder%>/build.html'],
       build_min: ['<%=conf.testFolder%>/build-min.html'],
-      angular_fire: ['<%=conf.testFolder%>/angularfire.html']
+      angular_fire: ['<%=conf.testFolder%>/build-min.html'
     },
     watch: {
       files: ['<%=conf.testFolder%>/*.js', '<%=conf.testFolder%>/*.html', '<%=conf.devFolder%>/**/*.js'],

@@ -259,8 +259,8 @@ angular.module(&#x27;objective-fire&#x27;)
           var name = oaps[i].name;
           if (typeof this[name] === &quot;object&quot;) {
             data[name] = [];
-            for (var j = 0; j &lt; oaps[i].length; j++) {
-              data[name][j] = oaps[i][j];
+            for (var j = 0; j &lt; this[name].length; j++) {
+              data[name][j] = this[name][j];
             }
           } else {
             data[name]= this[name];

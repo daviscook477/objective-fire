@@ -1,5 +1,5 @@
 angular.module('objective-fire')
-.factory('FireObject', function($firebase, FactoryExtender) {
+.factory('FireObject', function($firebaseObject) {
   /**
   Object created from class that has methods for creating instances of that class
   @class FireObject
@@ -27,13 +27,8 @@ angular.module('objective-fire')
     @type ObjectiveFire
     */
     this.objFire = objFire;
-    // create the angularfire factory
-    /**
-    AngularFire object factory used to create instances of this class
-    @property factory
-    @type AngularFire ObjectFactory
-    */
-    this.factory = FactoryExtender.createFactory(this.objectClass, this.rootRef, this.objFire);
+
+    this.Factory = FactoryExtender.createObjectFactory(objectClass, rootRef, objFire);
   }
   /**
   Creates a new instance of the class.
@@ -41,11 +36,10 @@ angular.module('objective-fire')
   @method new
   @return New instance of the class
   */
-  FireObject.prototype.new = function() { // TODO: when creating new objects they should automatically have their flags set to loaded
+  FireObject.prototype.new = function() {
     // obtain the angularfire object
     var ref = this.rootRef.child(this.objectClass.name).push(); // create a new location for the object we are making
-    var sync = $firebase(ref, { objectFactory: this.factory }); // create the angularfire object using the factory based off this class
-    var obj = sync.$asObject();
+    var obj = new this.Factory(ref);
     // construct the new instance
     obj._loaded = false; // private property that states if the object has been loaded
     obj.$loaded().then(function() { // make the _loaded property change to true when the object loads
@@ -59,6 +53,7 @@ angular.module('objective-fire')
     } else {
       throw "new may only be called for classes that have constructors";
     }
+    // tell the object that all changed properties have been loaded
     var properties = this.objectClass.properties;
     var ops = properties.objectP;
     var oaps = properties.arrayP;
@@ -88,8 +83,7 @@ angular.module('objective-fire')
   FireObject.prototype.instance = function(id) {
     // obtain the angularfire object
     var ref = this.rootRef.child(this.objectClass.name).child(id);
-    var sync = $firebase(ref, { objectFactory: this.factory });
-    var obj = sync.$asObject();
+    var obj = new this.Factory(ref);
     // construct the existing instance
     obj._loaded = false; // private property that states if the object has been loaded
     obj.$loaded().then(function() { // make the _loaded property change to true when the object loads

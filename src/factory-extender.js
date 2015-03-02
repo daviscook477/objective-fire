@@ -1,5 +1,5 @@
 angular.module('objective-fire')
-.factory('FactoryExtender', function($FirebaseObject, $firebase, $q, ObjectArray) {
+.factory('FactoryExtender', function($firebaseObject, $q, ObjectArray) {
   /**
   Helper class that creates extended AngularFire factories
   @class FactoryExtender
@@ -8,13 +8,13 @@ angular.module('objective-fire')
   return {
     /**
     Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase
-    @method createFactory
+    @method createObjectFactory
     @param objectClass {ObjectClass} The class of object the factory will produce
     @param rootRef Firebase object that is the root of the Firebase
     @param objFire {ObjectiveFire} References to the ObjectiveFire that made this FireObject
     @return AngularFire factory that produces objects of the class objectClass
     */
-    createFactory: function(objectClass, rootRef, objFire) {
+    createObjectFactory: function(objectClass, rootRef, objFire) {
       var template = {};
       var properties = objectClass.properties;
       var pps, ops, oaps;
@@ -170,8 +170,8 @@ angular.module('objective-fire')
           var name = oaps[i].name;
           if (typeof this[name] === "object") {
             data[name] = [];
-            for (var j = 0; j < oaps[i].length; j++) {
-              data[name][j] = oaps[i][j];
+            for (var j = 0; j < this[name].length; j++) {
+              data[name][j] = this[name][j];
             }
           } else {
             data[name]= this[name];
@@ -184,7 +184,7 @@ angular.module('objective-fire')
         }
         rootRef.child(objectClass.name).child(this.$id).set(data); // set the data at here in the firebase
       };
-      return $FirebaseObject.$extendFactory(template);
+      return $firebaseObject.$extend(template);
     }
   };
 })

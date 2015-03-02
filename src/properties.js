@@ -1,4 +1,4 @@
-angular.module("objective-fire")
+angular.module('objective-fire')
 .factory("ObjectProperty", function() {
   /**
   Property that is an object
@@ -130,6 +130,28 @@ angular.module("objective-fire")
         throw "property must be of type PrimitiveProperty || ObjectProperty || ObjectArrayProperty";
       }
       return this;
+    },
+    // TODO: doc these and test them
+    addPrimitiveProperty: function(name) {
+      if (!typeof name === "string") {
+        throw "name must have type of string";
+      } else {
+        this.primitive.push(new PrimitiveProperty(name));
+      }
+    },
+    addObjectProperty: function(name, objectClassName) {
+      if (!typeof name === "string") {
+        throw "name must have type of string";
+      } else {
+        this.objectP.push(new ObjectProperty(name, objectClassName));
+      }
+    },
+    addObjectArrayProperty: function(name, objectClassName) {
+      if (!typeof name === "string") {
+        throw "name must have type of string";
+      } else {
+        this.arrayP.push(new ObjectArrayProperty(name, objectClassName));
+      }
     }
   };
   return Properties;

@@ -1,7 +1,7 @@
 angular.module('objective-fire')
-.factory('ObjectArray', function($FirebaseArray, $firebase) {
+.factory('ObjectArray', function($firebaseArray) {
   var getFactory = function(fireObject) {
-    return $FirebaseArray.$extendFactory({
+    return $firebaseArray.$extend({
       $$added: function(snapshot) {
         return fireObject.instance(snapshot.val());
       },
@@ -12,7 +12,6 @@ angular.module('objective-fire')
         if (!angular.equals(curO, newO)) {
           change = true;
         }
-        //TODO: determine if it changes then return that instead of true
         return changed;
       }
     });
@@ -25,8 +24,7 @@ angular.module('objective-fire')
   @param fireObject {FireObject} FireObject that is the class that each element of this array will be
   */
   return function(ref, fireObject) {
-    var sync = $firebase(ref, { arrayFactory: getFactory(fireObject) });
-    var obj = sync.$asArray();
+    var obj = new getFactory(fireObject);
     return obj;
   };
 });
