@@ -10,7 +10,72 @@ angular.module('objective-fire')
         _objFire: objFire,
         // methods to override
         $load: function(name) {
+          //TODO/WARNING THIS METHOD DOESN'T WORK! IT SIMPLY COPIES OLD CODE FOR REFERENCE
+          var deffered = $q.defer();
+          if (typeof name !== "string") {
+            throw "name must be of type string";
+          }
+          if (!this._doLoad[name]) { // if property is already loaded don't do anything
+            // find the actual property definition
+            var property = undefined;
+            var kind = "";
+            for (var i = 0; i < ops.length; i++) {
+              if (ops[i].name === name) {
+                property = ops[i];
+                kind = "op";
+                break;
+              }
+            }
+            for (var i = 0; i < oaps.length; i++) {
+              if (oaps[i].name === name) {
+                property = oaps[i];
+                kind = "oap";
+                break;
+              }
+            }
+            this._doLoad[name] = true; // require that the property is loaded
+            if (this._loaded) { // if already loaded then manually load the property
+              if (kind === "op") {
+                var objectClassName = property.objectClassName;
+                var objectClass2 = objFire.getObjectClass(objectClassName);
+                var obj = objectClass2.instance(this[name]); // create the object
+                this[name] = obj;
+                this._isLoaded[name] = true;
+                deffered.resolve(this[name]);
+              } else if (kind === "oap") {
+                var objectClassName = property.objectClassName;
+                var objectClass2 = objFire.getObjectClass(objectClassName);
+                var arr = new ObjectArray(rootRef.child(objectClass.name).child(this.$id).child(name), objectClass2);
+                this[name] = arr;
+                this._isLoaded[name] = true;
+                deffered.resolve(this[name]);
+              }
+            } else { // if we haven't loaded, it will be loaded when the object is loaded
+              // this means that simply changing this._doLoad[name] will load it
 
+              // make sure it is actually loaded in the object loading (could not due to synchronization issues (I think))
+              this.$loaded().then(function(self) {
+                if (!self._isLoaded[name]) { // if for some reason not loaded manually load the property
+                  if (kind === "op") {
+                    var objectClassName = property.objectClassName;
+                    var objectClass2 = objFire.getObjectClass(objectClassName);
+                    var obj = objectClass2.instance(self[name]); // create the object
+                    self[name] = obj;
+                  } else if (kind === "oap") {
+                    var objectClassName = property.objectClassName;
+                    var objectClass2 = objFire.getObjectClass(objectClassName);
+                    var arr = new ObjectArray(rootRef.child(objectClass.name).child(self.$id).child(name), objectClass2);
+                    self[name] = arr;
+                  }
+                }
+                self._isLoaded[name] = true;
+                deffered.resolve(self[name]);
+              });
+            }
+          } else {
+            deffered.resolve(this[name]);
+          }
+          return deffered.promise;
         },
         $toJSON: function(rec) {
           var properties = this._objectClass.properties;
