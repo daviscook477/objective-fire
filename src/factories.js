@@ -1,15 +1,18 @@
 angular.module('objective-fire')
-.factory('Factories', function($firebaseObject, $firebaseArray) {
+.factory('Factories', function($firebaseObject, $firebaseArray, $q) {
   var factories = {
     objectFactory: function(objectClass, rootRef, objFire) {
-      function Factory() {}
-      Factory.prototype = {
+      return $firebaseObject.$extend({
         // things that must be accessible
         _objectClass: objectClass,
         _rootRef: rootRef,
         _objFire: objFire,
         // methods to override
         $load: function(name) {
+          var properties = this._objectClass.properties;
+          var pps = properties.primitive;
+          var ops = properties.objectP;
+          var oaps = properties.arrayP;
           //TODO/WARNING THIS METHOD DOESN'T WORK! IT SIMPLY COPIES OLD CODE FOR REFERENCE
           var deffered = $q.defer();
           if (typeof name !== "string") {
@@ -79,7 +82,7 @@ angular.module('objective-fire')
         },
         $toJSON: function(rec) {
           var properties = this._objectClass.properties;
-          var pps = properties.primtive;
+          var pps = properties.primitive;
           var ops = properties.objectP;
           var oaps = properties.arrayP;
           var data = {};
@@ -115,7 +118,7 @@ angular.module('objective-fire')
         },
         $fromJSON: function(snap) {
           var properties = this._objectClass.properties;
-          var pps = properties.primtive;
+          var pps = properties.primitive;
           var ops = properties.objectP;
           var oaps = properties.arrayP;
           var data = snap.val();
@@ -131,7 +134,7 @@ angular.module('objective-fire')
             var name = ops[i].name;
             if (this._doLoad[name]) { // only load property if it should be
               // only create a new object if the object has changed
-              if (this[name].$id !== data[name]) { // in the firebase only the object reference is stored so if the reference isn't the same as the id of the existing object they must be different
+              if (!this[name] || this[name].$id !== data[name]) { // in the firebase only the object reference is stored so if the reference isn't the same as the id of the existing object they must be different
                 var objectClassName = ops[i].objectClassName;
                 var objectClass = this._objFire.getObjectClass(objectClassName);
                 var obj = objectClass.instance(data[name]);
@@ -147,10 +150,11 @@ angular.module('objective-fire')
           for (var i = 0; i < oaps.length; i++) { // replace all object array properties
             var name = oaps[i].name;
             if (this._doLoad[name]) {
-              if (!this.isLoaded[name]) { // arrays actually must only be loaded once
+              if (!this._isLoaded[name]) { // arrays actually must only be loaded once
                 var objectClassName = oaps[i].objectClassName;
                 var objectClass = this._objFire.getObjectClass(objectClassName);
-                var arr = new factories.arrayFactory(objectClass, this._rootRef, this._objFire)(this._rootRef.child(this._objectClass.name).child(this.$id).child(name)); // we are obtaining a constructor by a function with parameters then calling that function
+                var Factory = factories.arrayFactory(objectClass, this._rootRef, this._objFire);
+                var arr = new Factory(this._rootRef.child(this._objectClass.name).child(this.$id).child(name)); // we are obtaining a constructor by a function with parameters then calling that function
                 this._isLoaded[name] = true;
                 newRec[name] = arr;
               } else {
@@ -162,12 +166,10 @@ angular.module('objective-fire')
           }
           return newRec;
         }
-      };
-      return $firebaseObject.$extend(Factory);
+      });
     },
     arrayFactory: function(fireObject, rootRef, objFire) {
-      function Factory() {}
-      Factory.prototype = {
+      return $firebaseArray.$extend({
         // things that must be accessible
         _fireObject: fireObject,
         _rootRef: rootRef,
@@ -177,10 +179,10 @@ angular.module('objective-fire')
           return rec.$id; // a record should be saved by its reference
         },
         $fromJSON: function(snap) {
-          return this._fireObject.instance(snap.val()); // create an object from the snapshot
+          var ob = this._fireObject.instance(snap.val());
+          return ob; // create an object from the snapshot
         }
-      };
-      return $firebaseArray.$extend(Factory);
+      });
     }
   };
   return factories;

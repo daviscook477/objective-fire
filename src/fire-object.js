@@ -47,7 +47,6 @@ angular.module('objective-fire')
     });
     obj._isLoaded = {};
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
-    obj.pointers = {}; // this property does something ... not sure what
     if (this.objectClass.objectConstructor !== null && typeof this.objectClass.objectConstructor === "function") {
       this.objectClass.objectConstructor.apply(obj, arguments); // call the constructor for new objects
     } else {
@@ -91,7 +90,6 @@ angular.module('objective-fire')
     });
     obj._isLoaded = {};
     obj._doLoad = {}; // this is private property that determines if an object property should be loaded
-    obj.pointers = {};
     return obj;
   };
   return FireObject;

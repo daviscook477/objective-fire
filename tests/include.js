@@ -6,5 +6,5 @@ var PrimitiveProperty = injector.get('PrimitiveProperty');
 var ObjectClass = injector.get('ObjectClass');
 var ObjectiveFire = injector.get('ObjectiveFire');
 var FireObject = injector.get('FireObject');
-var FactoryExtender = injector.get('FactoryExtender');
+var Factories = injector.get('Factories');
 var ObjectArray = injector.get('ObjectArray');

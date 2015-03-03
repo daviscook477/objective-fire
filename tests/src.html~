@@ -16,7 +16,7 @@
 
       <!-- get the library files we are testing -->
       <script src='../src/objective-fire.js'></script>
-      <script src='../src/factories.js'></script>
+      <script src='../src/factory-extender.js'></script>
       <script src='../src/fire-object.js'></script>
       <script src='../src/object-class.js'></script>
       <script src='../src/object-array.js'></script>

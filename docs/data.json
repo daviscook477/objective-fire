@@ -6,15 +6,6 @@
         "url": "https://github.com/daviscook477/objective-fire"
     },
     "files": {
-        "src/factory-extender.js": {
-            "name": "src/factory-extender.js",
-            "modules": {},
-            "classes": {
-                "FactoryExtender": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "src/fire-object.js": {
             "name": "src/fire-object.js",
             "modules": {},
@@ -66,19 +57,6 @@
     },
     "modules": {},
     "classes": {
-        "FactoryExtender": {
-            "name": "FactoryExtender",
-            "shortname": "FactoryExtender",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "file": "src/factory-extender.js",
-            "line": 3,
-            "description": "Helper class that creates extended AngularFire factories",
-            "static": 1
-        },
         "FireObject": {
             "name": "FireObject",
             "shortname": "FireObject",
@@ -275,33 +253,6 @@
     },
     "classitems": [
         {
-            "file": "src/factory-extender.js",
-            "line": 9,
-            "description": "Creates an AngularFire factory that makes of objects of a specific class from a specific Firebase",
-            "itemtype": "method",
-            "name": "createObjectFactory",
-            "params": [
-                {
-                    "name": "objectClass",
-                    "description": "The class of object the factory will produce",
-                    "type": "ObjectClass"
-                },
-                {
-                    "name": "rootRef",
-                    "description": "Firebase object that is the root of the Firebase"
-                },
-                {
-                    "name": "objFire",
-                    "description": "References to the ObjectiveFire that made this FireObject",
-                    "type": "ObjectiveFire"
-                }
-            ],
-            "return": {
-                "description": "AngularFire factory that produces objects of the class objectClass"
-            },
-            "class": "FactoryExtender"
-        },
-        {
             "file": "src/fire-object.js",
             "line": 12,
             "description": "The class that this FireObject makes",
@@ -341,7 +292,7 @@
         },
         {
             "file": "src/fire-object.js",
-            "line": 77,
+            "line": 76,
             "description": "Creates an instance of the class from data existing in the Firebase",
             "itemtype": "method",
             "name": "instance",
